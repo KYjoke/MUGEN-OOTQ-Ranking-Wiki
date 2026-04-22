@@ -1193,7 +1193,8 @@ let currentAct = 'all';
 let currentTech = 'all';
 
 document.querySelectorAll('#tagFilter .tag-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    console.log('Tag button clicked:', e.target.dataset.tag);
     currentTag = btn.dataset.tag;
     document.querySelectorAll('#tagFilter .tag-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
