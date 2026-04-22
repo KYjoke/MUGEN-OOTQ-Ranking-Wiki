@@ -16,6 +16,7 @@ async function build() {
 
   const layoutTemplate = await fs.readFile(path.join(SRC, 'templates', 'layout.ejs'), 'utf8');
   const charTemplate = await fs.readFile(path.join(SRC, 'templates', 'character.ejs'), 'utf8');
+  const charListTemplate = await fs.readFile(path.join(SRC, 'templates', 'character-list.ejs'), 'utf8');
   const glossaryTemplate = await fs.readFile(path.join(SRC, 'templates', 'glossary.ejs'), 'utf8');
   const indexTemplate = await fs.readFile(path.join(SRC, 'templates', 'index.ejs'), 'utf8');
 
@@ -33,15 +34,20 @@ async function build() {
       const meta = await fs.readJson(metaPath);
       await fs.ensureDir(path.join(DIST, 'characters', slug));
       const assetsDir = path.join(CONTENT, 'characters', slug, 'assets');
-      if (await fs.pathExists(assetsDir)) {
+      const hasAssets = await fs.pathExists(assetsDir);
+      if (hasAssets) {
         await fs.copy(assetsDir, path.join(DIST, 'characters', slug, 'assets'));
       }
-      const innerContent = ejs.render(charTemplate, { meta, slug, r: (p) => rel(p, 1) });
+      const innerContent = ejs.render(charTemplate, { meta, slug, hasAssets, r: (p) => rel(p, 1) });
       const html = ejs.render(layoutTemplate, { title: meta.title, content: innerContent, r: (p) => rel(p, 1), lang: 'zh' });
       await fs.writeFile(path.join(DIST, 'characters', slug, 'index.html'), html);
       characters.push({ slug, ...meta });
     }
   }
+
+  const charListContent = ejs.render(charListTemplate, { characters, r: (p) => rel(p, 0) });
+  const charListHtml = ejs.render(layoutTemplate, { title: '角色', content: charListContent, r: (p) => rel(p, 0), lang: 'zh' });
+  await fs.writeFile(path.join(DIST, 'characters', 'index.html'), charListHtml);
 
   const terms = [];
   const termDirs = await fs.readdir(path.join(CONTENT, 'glossary'));
@@ -56,6 +62,24 @@ async function build() {
       terms.push({ slug, ...meta });
     }
   }
+
+  const glossaryListContent = `
+    <div class="page-header">
+      <h1>术语</h1>
+      <p class="lead">所有已收录的术语解释</p>
+    </div>
+    <div class="card-grid">
+      ${terms.map(term => `
+        <a class="card" href="${rel('glossary/', 0)}${term.slug}/">
+          <h3>${term.title}</h3>
+          ${term.summary ? `<p>${term.summary}</p>` : ''}
+        </a>
+      `).join('')}
+      ${terms.length === 0 ? '<div class="empty-state"><p>暂无术语</p></div>' : ''}
+    </div>
+  `;
+  const glossaryListHtml = ejs.render(layoutTemplate, { title: '术语', content: glossaryListContent, r: (p) => rel(p, 0), lang: 'zh' });
+  await fs.writeFile(path.join(DIST, 'glossary', 'index.html'), glossaryListHtml);
 
   const indexContent = ejs.render(indexTemplate, { characters, terms, r: (p) => rel(p, 0) });
   const indexHtml = ejs.render(layoutTemplate, { title: 'MUGEN OOTQ Ranking Wiki', content: indexContent, r: (p) => rel(p, 0), lang: 'zh' });

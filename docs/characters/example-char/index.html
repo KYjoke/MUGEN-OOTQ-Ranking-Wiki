@@ -33,47 +33,195 @@
   </nav>
 
   <main class="container">
-    <div class="content-page">
+    <div class="character-page">
   <nav class="breadcrumb">
-    <a href="../" data-i18n="home">首页</a>
+    <a href="../">首页</a>
     <span>›</span>
-    <a href="../characters/" data-i18n="characters">角色</a>
+    <a href="../characters/">角色</a>
     <span>›</span>
     示例角色
   </nav>
 
-  <h1>示例角色</h1>
-
-  
-    <div class="tags">
-      
-        <span class="tag">论外</span>
-      
-        <span class="tag">高阶</span>
-      
+  <div class="infobox">
+    <div class="infobox-header">
+      <h1>示例角色</h1>
     </div>
-  
-
-  <div class="info-box" style="margin-top: 15px;">
     
-      <p><strong>Summary:</strong> 这是一个示例角色卡片</p>
+      <div class="infobox-image">
+        <img src="../assets/cover.png" alt="示例角色" onerror="this.style.display='none'">
+      </div>
     
-    
+    <table class="infobox-table">
+      
+      
+      
+        <tr><th>标签</th><td><div class="tags"><span class="tag">论外</span><span class="tag">高阶</span></div></td></tr>
+      
+    </table>
   </div>
 
-  <div class="content-body">
+  <div class="article-body">
+    
+      <p class="lead">这是一个示例角色卡片</p>
+    
     <p>这是角色的详细描述内容。</p><p>支持HTML格式的描述文本。</p>
   </div>
 
   
-    <h2 data-i18n="relatedLinks">相关链接</h2>
-    <ul>
-      
-        <li><a href="https://example.com" target="_blank">下载链接</a></li>
-      
-    </ul>
+    <div class="section">
+      <h2>相关链接</h2>
+      <ul class="link-list">
+        
+          <li><a href="https://example.com" target="_blank" rel="noopener">下载链接</a></li>
+        
+      </ul>
+    </div>
   
 </div>
+
+<style>
+.character-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.infobox {
+  width: 280px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.infobox-header {
+  background: var(--bg-card);
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infobox-header h1 {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.infobox-image {
+  padding: 10px;
+  text-align: center;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infobox-image img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 4px;
+}
+
+.infobox-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.infobox-table th,
+.infobox-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.infobox-table th {
+  background: var(--bg-card);
+  font-weight: 500;
+  color: var(--text-secondary);
+  width: 40%;
+}
+
+.infobox-table tr:last-child th,
+.infobox-table tr:last-child td {
+  border-bottom: none;
+}
+
+.article-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.article-body .lead {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.article-body p {
+  margin-bottom: 15px;
+}
+
+.article-body h2 {
+  font-size: 1.3em;
+  margin: 25px 0 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.article-body h3 {
+  font-size: 1.1em;
+  margin: 20px 0 8px;
+}
+
+.article-body ul,
+.article-body ol {
+  margin: 15px 0;
+  padding-left: 25px;
+}
+
+.article-body li {
+  margin-bottom: 6px;
+}
+
+.section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.link-list {
+  list-style: none;
+  padding: 0;
+}
+
+.link-list li {
+  padding: 6px 0;
+}
+
+.link-list li::before {
+  content: "→ ";
+  color: var(--text-secondary);
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .character-page {
+    flex-direction: column;
+  }
+
+  .infobox {
+    width: 100%;
+  }
+}
+</style>
 
   </main>
 
