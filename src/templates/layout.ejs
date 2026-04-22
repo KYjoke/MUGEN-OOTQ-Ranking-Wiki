@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="<%= r('styles.css') %>">
 </head>
 <body>
   <header>
     <div class="container header-inner">
-      <a href="/" class="logo">
+      <a href="<%= r('') %>" class="logo">
         <span>🎮</span>
         <span>MUGEN OOTQ Wiki</span>
       </a>
@@ -26,9 +26,9 @@
 
   <nav class="container">
     <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
-      <a href="/" data-i18n="home">首页</a>
-      <a href="/characters/" data-i18n="characters" style="margin-left: 20px;">角色</a>
-      <a href="/glossary/" data-i18n="glossary" style="margin-left: 20px;">术语</a>
+      <a href="<%= r('') %>" data-i18n="home">首页</a>
+      <a href="<%= r('characters/') %>" data-i18n="characters" style="margin-left: 20px;">角色</a>
+      <a href="<%= r('glossary/') %>" data-i18n="glossary" style="margin-left: 20px;">术语</a>
     </div>
   </nav>
 
@@ -42,6 +42,6 @@
     </div>
   </footer>
 
-  <script src="/i18n.js"></script>
+  <script src="<%= r('i18n.js') %>"></script>
 </body>
 </html>

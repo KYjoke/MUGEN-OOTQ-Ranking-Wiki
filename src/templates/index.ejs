@@ -11,7 +11,7 @@
   </div>
   <div class="card-grid" id="charactersGrid">
     <% characters.forEach(char => { %>
-      <a class="card" href="/characters/<%= char.slug %>/">
+      <a class="card" href="<%= r('characters/') %><%= char.slug %>/">
         <h3><%= char.title %></h3>
         <% if (char.summary) { %>
           <p><%= char.summary %></p>
@@ -39,7 +39,7 @@
   </div>
   <div class="card-grid" id="glossaryGrid">
     <% terms.forEach(term => { %>
-      <a class="card" href="/glossary/<%= term.slug %>/">
+      <a class="card" href="<%= r('glossary/') %><%= term.slug %>/">
         <h3><%= term.title %></h3>
         <% if (term.summary) { %>
           <p><%= term.summary %></p>

@@ -7,6 +7,10 @@ const SRC = path.join(ROOT, 'src');
 const CONTENT = path.join(ROOT, 'content');
 const DIST = path.join(ROOT, 'docs');
 
+function rel(p, depth) {
+  return depth > 0 ? '../'.repeat(depth) + p : p;
+}
+
 async function build() {
   await fs.emptyDir(DIST);
 
@@ -32,8 +36,8 @@ async function build() {
       if (await fs.pathExists(assetsDir)) {
         await fs.copy(assetsDir, path.join(DIST, 'characters', slug, 'assets'));
       }
-      const innerContent = ejs.render(charTemplate, { meta, slug });
-      const html = ejs.render(layoutTemplate, { title: meta.title, content: innerContent, lang: 'zh' });
+      const innerContent = ejs.render(charTemplate, { meta, slug, r: (p) => rel(p, 1) });
+      const html = ejs.render(layoutTemplate, { title: meta.title, content: innerContent, r: (p) => rel(p, 1), lang: 'zh' });
       await fs.writeFile(path.join(DIST, 'characters', slug, 'index.html'), html);
       characters.push({ slug, ...meta });
     }
@@ -46,15 +50,15 @@ async function build() {
     if (await fs.pathExists(metaPath)) {
       const meta = await fs.readJson(metaPath);
       await fs.ensureDir(path.join(DIST, 'glossary', slug));
-      const innerContent = ejs.render(glossaryTemplate, { meta, slug });
-      const html = ejs.render(layoutTemplate, { title: meta.title, content: innerContent, lang: 'zh' });
+      const innerContent = ejs.render(glossaryTemplate, { meta, slug, r: (p) => rel(p, 1) });
+      const html = ejs.render(layoutTemplate, { title: meta.title, content: innerContent, r: (p) => rel(p, 1), lang: 'zh' });
       await fs.writeFile(path.join(DIST, 'glossary', slug, 'index.html'), html);
       terms.push({ slug, ...meta });
     }
   }
 
-  const indexContent = ejs.render(indexTemplate, { characters, terms });
-  const indexHtml = ejs.render(layoutTemplate, { title: 'MUGEN OOTQ Ranking Wiki', content: indexContent, lang: 'zh' });
+  const indexContent = ejs.render(indexTemplate, { characters, terms, r: (p) => rel(p, 0) });
+  const indexHtml = ejs.render(layoutTemplate, { title: 'MUGEN OOTQ Ranking Wiki', content: indexContent, r: (p) => rel(p, 0), lang: 'zh' });
   await fs.writeFile(path.join(DIST, 'index.html'), indexHtml);
 
   console.log('Build complete! Output in docs/');
