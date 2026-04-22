@@ -62,8 +62,8 @@ async function build() {
       if (hasAssets) {
         await fs.copy(assetsDir, path.join(DIST, 'characters', slug, 'assets'));
       }
-      const innerContent = ejs.render(charTemplate, { meta, slug, hasAssets, r: (p) => rel(p, 1), getField });
-      const html = ejs.render(layoutTemplate, { title: getField(meta.title, 'zh'), content: innerContent, r: (p) => rel(p, 1), lang: 'zh', metaRaw: JSON.stringify(meta) });
+      const innerContent = ejs.render(charTemplate, { meta, slug, hasAssets, r: (p) => rel(p, 2), getField });
+      const html = ejs.render(layoutTemplate, { title: getField(meta.title, 'zh'), content: innerContent, r: (p) => rel(p, 2), lang: 'zh', metaRaw: JSON.stringify(meta) });
       await fs.writeFile(path.join(DIST, 'characters', slug, 'index.html'), html);
       characters.push({ slug, meta });
     }
@@ -80,8 +80,8 @@ async function build() {
     if (await fs.pathExists(metaPath)) {
       const meta = await fs.readJson(metaPath);
       await fs.ensureDir(path.join(DIST, 'glossary', slug));
-      const innerContent = ejs.render(glossaryTemplate, { meta, slug, r: (p) => rel(p, 1), getField });
-      const html = ejs.render(layoutTemplate, { title: getField(meta.title, 'zh'), content: innerContent, r: (p) => rel(p, 1), lang: 'zh', metaRaw: JSON.stringify(meta) });
+      const innerContent = ejs.render(glossaryTemplate, { meta, slug, r: (p) => rel(p, 2), getField });
+      const html = ejs.render(layoutTemplate, { title: getField(meta.title, 'zh'), content: innerContent, r: (p) => rel(p, 2), lang: 'zh', metaRaw: JSON.stringify(meta) });
       await fs.writeFile(path.join(DIST, 'glossary', slug, 'index.html'), html);
       terms.push({ slug, meta });
     }
