@@ -188,12 +188,12 @@ document.querySelectorAll('#techFilter .tag-btn').forEach(btn => {
 
 function filterCards() {
   document.querySelectorAll('#listContainer .card').forEach(card => {
-    const tags = JSON.parse(card.dataset.tags || '[]');
-    const act = card.dataset.act || '';
-    const techs = JSON.parse(card.dataset.techs || '[]');
-    const tagMatch = currentTag === 'all' || tags.includes(currentTag);
-    const actMatch = currentAct === 'all' || act === currentAct;
-    const techMatch = currentTech === 'all' || techs.includes(currentTech);
+    const tags = JSON.parse(card.dataset.tags || '[]').map(t => t.toLowerCase());
+    const act = (card.dataset.act || '').toLowerCase();
+    const techs = JSON.parse(card.dataset.techs || '[]').map(t => t.toLowerCase());
+    const tagMatch = currentTag === 'all' || tags.includes(currentTag.toLowerCase());
+    const actMatch = currentAct === 'all' || act === currentAct.toLowerCase();
+    const techMatch = currentTech === 'all' || techs.includes(currentTech.toLowerCase());
     card.classList.toggle('hidden', !(tagMatch && actMatch && techMatch));
   });
 }
