@@ -3,9 +3,22 @@
   <p class="lead" data-i18n="<%= leadKey %>"><%= leadZh %></p>
 </div>
 
+<% if (itemType === 'char') { %>
+<div class="tag-filter" id="tagFilter">
+  <button class="tag-btn active" data-tag="all">全部</button>
+  <% const allTags = [...new Set(items.flatMap(item => {
+    const tags = item.meta.tags;
+    return Array.isArray(tags) ? tags.map(t => getField(t, 'zh')) : (tags?.zh || []);
+  }))].sort(); %>
+  <% allTags.forEach(tag => { %>
+    <button class="tag-btn" data-tag="<%= tag %>"><%= tag %></button>
+  <% }); %>
+</div>
+<% } %>
+
 <div class="list-container" id="listContainer" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
   <% items.forEach((item, idx) => { %>
-    <a class="card <%= itemType %>-card" href="<%= item.slug %>/" style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card <%= itemType %>-card" href="<%= item.slug %>/" data-tags='<%= JSON.stringify(Array.isArray(item.meta.tags) ? item.meta.tags.map(t => getField(t, 'zh')) : (item.meta.tags?.zh || [])).replace(/'/g, "\\'") %>' style="display:flex;flex-direction:column;padding:16px;">
       <% if (itemType === 'char' && item.meta.image) { %>
         <img src="../img/<%= item.meta.image %>" alt="<%= getField(item.meta.title, 'zh') %>" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       <% } %>
@@ -38,10 +51,42 @@
 </div>
 
 <style>
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.tag-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.2s;
+}
+
+.tag-btn:hover {
+  border-color: var(--link-color);
+}
+
+.tag-btn.active {
+  background: var(--link-color);
+  color: white;
+  border-color: var(--link-color);
+}
+
 .list-container .card {
   display: flex;
   flex-direction: column;
   padding: 16px;
+}
+
+.list-container .card.hidden {
+  display: none;
 }
 
 .card-header {
@@ -72,3 +117,21 @@
   margin-top: 8px;
 }
 </style>
+
+<script>
+document.querySelectorAll('.tag-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tag = btn.dataset.tag;
+    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#listContainer .card').forEach(card => {
+      if (tag === 'all') {
+        card.classList.remove('hidden');
+      } else {
+        const tags = JSON.parse(card.dataset.tags || '[]');
+        card.classList.toggle('hidden', !tags.includes(tag));
+      }
+    });
+  });
+});
+</script>
