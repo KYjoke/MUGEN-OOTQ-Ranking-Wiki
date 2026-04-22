@@ -5,20 +5,21 @@
 
 <div class="card-grid">
   <% characters.forEach(char => { %>
-    <a class="card" href="<%= r('') %><%= char.slug %>/">
+    <a class="card char-card" href="<%= r('') %><%= char.slug %>/">
       <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-        <h3 style="margin:0;"><%= getField(char.meta.title, 'zh') %></h3>
+        <h3 class="char-title" style="margin:0;"><%= getField(char.meta.title, 'zh') %></h3>
         <% if (char.meta.ootqLevel) { %>
-          <span class="ootq-badge ootq-<%= char.meta.ootqTier || 'low' %>"><%= getField(char.meta.ootqLevel, 'zh') %></span>
+          <span class="ootq-badge ootq-<%= char.meta.ootqTier || 'low' %> char-ootq"><%= getField(char.meta.ootqLevel, 'zh') %></span>
         <% } %>
       </div>
       <% if (char.meta.summary) { %>
-        <p><%= getField(char.meta.summary, 'zh') %></p>
+        <p class="char-summary"><%= getField(char.meta.summary, 'zh') %></p>
       <% } %>
-      <% if (char.meta.tags && char.meta.tags.length) { %>
-        <div class="tags">
-          <% (Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || [])).slice(0, 4).forEach(tag => { %>
-            <span class="tag"><%= tag %></span>
+      <% const tagsArr = Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || []); %>
+      <% if (tagsArr.length) { %>
+        <div class="tags char-tags">
+          <% tagsArr.slice(0, 4).forEach(tag => { %>
+            <span class="tag"><%= getField(tag, 'zh') %></span>
           <% }); %>
         </div>
       <% } %>

@@ -20,10 +20,11 @@
           <% } %>
         </div>
         <p class="char-summary" data-field="summary"><%= getField(char.meta.summary, 'zh') %></p>
-        <% if (char.meta.tags && char.meta.tags.length) { %>
+        <% const tagsArr = Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || []); %>
+        <% if (tagsArr.length) { %>
           <div class="tags char-tags" data-field="tags">
-            <% (Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || [])).slice(0, 3).forEach(tag => { %>
-              <span class="tag"><%= tag %></span>
+            <% tagsArr.slice(0, 3).forEach(tag => { %>
+              <span class="tag"><%= getField(tag, 'zh') %></span>
             <% }); %>
           </div>
         <% } %>
@@ -44,10 +45,10 @@
   </div>
   <div class="card-grid" id="glossaryGrid">
     <% terms.forEach(term => { %>
-      <a class="card" href="<%= r('glossary/') %><%= term.slug %>/">
-        <h3><%= getField(term.meta.title, 'zh') %></h3>
+      <a class="card glossary-card" href="<%= r('glossary/') %><%= term.slug %>/">
+        <h3 class="term-title"><%= getField(term.meta.title, 'zh') %></h3>
         <% if (term.meta.summary) { %>
-          <p><%= getField(term.meta.summary, 'zh') %></p>
+          <p class="term-summary"><%= getField(term.meta.summary, 'zh') %></p>
         <% } %>
       </a>
     <% }); %>
