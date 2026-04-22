@@ -14,20 +14,12 @@
     <% characters.forEach((char, idx) => { %>
       <a class="card char-card" href="<%= r('characters/') %><%= char.slug %>/">
         <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-          <h3 data-i18n="<%= 'c:' + idx + ':title' %>"><%= getField(char.meta.title, 'zh') %></h3>
+          <h3 class="char-title" data-lang='<%= JSON.stringify(char.meta.title).replace(/'/g, "\\'") %>'><%= getField(char.meta.title, 'zh') %></h3>
           <% if (char.meta.ootqLevel) { %>
-            <span class="ootq-badge ootq-<%= char.meta.ootqTier || 'low' %>" data-i18n="<%= 'c:' + idx + ':ootqLevel' %>"><%= getField(char.meta.ootqLevel, 'zh') %></span>
+            <span class="ootq-badge ootq-<%= char.meta.ootqTier || 'low' %> char-ootq" data-lang='<%= JSON.stringify(char.meta.ootqLevel).replace(/'/g, "\\'") %>'><%= getField(char.meta.ootqLevel, 'zh') %></span>
           <% } %>
         </div>
-        <p data-i18n="<%= 'c:' + idx + ':summary' %>"><%= getField(char.meta.summary, 'zh') %></p>
-        <% const tagsArr = Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || []); %>
-        <% if (tagsArr.length) { %>
-          <div class="tags" data-i18n="<%= 'c:' + idx + ':tags' %>" data-tags='<%= JSON.stringify(char.meta.tags) %>'>
-            <% tagsArr.slice(0, 3).forEach(tag => { %>
-              <span class="tag"><%= getField(tag, 'zh') %></span>
-            <% }); %>
-          </div>
-        <% } %>
+        <p class="char-summary" data-lang='<%= JSON.stringify(char.meta.summary).replace(/'/g, "\\'") %>'><%= getField(char.meta.summary, 'zh') %></p>
       </a>
     <% }); %>
     <% if (characters.length === 0) { %>
@@ -46,9 +38,9 @@
   <div class="card-grid" id="glossaryGrid">
     <% terms.forEach((term, idx) => { %>
       <a class="card glossary-card" href="<%= r('glossary/') %><%= term.slug %>/">
-        <h3 data-i18n="<%= 't:' + idx + ':title' %>"><%= getField(term.meta.title, 'zh') %></h3>
+        <h3 class="term-title" data-lang='<%= JSON.stringify(term.meta.title).replace(/'/g, "\\'") %>'><%= getField(term.meta.title, 'zh') %></h3>
         <% if (term.meta.summary) { %>
-          <p data-i18n="<%= 't:' + idx + ':summary' %>"><%= getField(term.meta.summary, 'zh') %></p>
+          <p class="term-summary" data-lang='<%= JSON.stringify(term.meta.summary).replace(/'/g, "\\'") %>'><%= getField(term.meta.summary, 'zh') %></p>
         <% } %>
       </a>
     <% }); %>
@@ -59,8 +51,3 @@
     <% } %>
   </div>
 </section>
-
-<script>
-window.__chars = <%- JSON.stringify(characters.map(c => c.meta)) %>;
-window.__terms = <%- JSON.stringify(terms.map(t => t.meta)) %>;
-</script>

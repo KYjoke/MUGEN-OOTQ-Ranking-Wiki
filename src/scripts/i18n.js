@@ -46,8 +46,6 @@ const translations = {
   }
 };
 
-const langNames = { zh: "中文", en: "English", ja: "日本語" };
-
 function getStoredTheme() {
   return localStorage.getItem("theme") || "light";
 }
@@ -56,21 +54,17 @@ function getStoredLang() {
   return localStorage.getItem("lang") || "zh";
 }
 
-window.getField = function(val, lang) {
+function getField(val, lang) {
   if (typeof val === 'string') return val;
   if (typeof val === 'object' && val !== null) {
     return val[lang] || val.zh || '';
   }
   return '';
-};
+}
 
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
-  updateThemeBtn(theme);
-}
-
-function updateThemeBtn(theme) {
   const btn = document.getElementById("themeToggle");
   if (btn) {
     btn.textContent = theme === "dark" ? "☀️" : "🌙";
@@ -83,24 +77,18 @@ function applyLang(lang) {
   document.documentElement.lang = lang;
   const t = translations[lang] || translations.zh;
 
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    try {
+      const langData = JSON.parse(el.dataset.lang);
+      el.textContent = getField(langData, lang);
+    } catch (e) {}
+  });
+
   document.querySelectorAll("[data-i18n]").forEach(el => {
     if (el.tagName === 'INPUT') return;
     const key = el.getAttribute("data-i18n");
-
-    if (key.startsWith('c:') || key.startsWith('t:')) {
-      const [type, idx, field] = key.split(':');
-      const meta = type === 'c' ? window.__chars[parseInt(idx)] : window.__terms[parseInt(idx)];
-      if (meta && meta[field]) {
-        if (field === 'tags') {
-          const tagsEl = el;
-          const tags = meta.tags.map(tag => getField(tag, lang));
-          tagsEl.innerHTML = tags.slice(0, 3).map(t => `<span class="tag">${t}</span>`).join('');
-        } else {
-          el.textContent = getField(meta[field], lang);
-        }
-      }
-    } else if (!['title', 'summary', 'description', 'ootqLevel'].includes(key)) {
-      el.textContent = t[key] || key;
+    if (!['title', 'summary', 'description', 'ootqLevel'].includes(key) && t[key]) {
+      el.textContent = t[key];
     }
   });
 
@@ -125,22 +113,10 @@ function applyLang(lang) {
         });
       }
     }
-
-    if (meta.tags) {
-      const tagsEl = document.querySelector('.infobox-table td .tags');
-      if (tagsEl) {
-        const tags = meta.tags.map(t => getField(t, lang));
-        tagsEl.innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
-      }
-    }
   }
 
-  updateLangSelect(lang);
-}
-
-function updateLangSelect(lang) {
-  const select = document.getElementById("langSelect");
-  if (select) select.value = lang;
+  const langSelect = document.getElementById("langSelect");
+  if (langSelect) langSelect.value = lang;
 }
 
 function toggleTheme() {
