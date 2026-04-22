@@ -1,0 +1,74 @@
+<div class="page-header">
+  <h1 data-i18n="<%= pageTitle %>"><%= pageTitleZh %></h1>
+  <p class="lead" data-i18n="<%= leadKey %>"><%= leadZh %></p>
+</div>
+
+<div class="list-container" id="listContainer">
+  <% items.forEach((item, idx) => { %>
+    <a class="card <%= itemType %>-card" href="<%= item.slug %>/">
+      <div class="card-header">
+        <h3 class="card-title" data-lang='<%= JSON.stringify(item.meta.title).replace(/'/g, "\\'") %>'><%= getField(item.meta.title, 'zh') %></h3>
+        <% if (itemType === 'char' && item.meta.ootqLevel) { %>
+          <span class="ootq-badge ootq-<%= item.meta.ootqTier || 'low' %>" data-lang='<%= JSON.stringify(item.meta.ootqLevel).replace(/'/g, "\\'") %>'><%= getField(item.meta.ootqLevel, 'zh') %></span>
+        <% } %>
+      </div>
+      <% if (item.meta.summary) { %>
+        <p class="card-summary" data-lang='<%= JSON.stringify(item.meta.summary).replace(/'/g, "\\'") %>'><%= getField(item.meta.summary, 'zh') %></p>
+      <% } %>
+      <% if (itemType === 'char' && item.meta.tags) { %>
+        <% const tagsArr = Array.isArray(item.meta.tags) ? item.meta.tags : (item.meta.tags.zh || []); %>
+        <% if (tagsArr.length) { %>
+          <div class="tags">
+            <% tagsArr.slice(0, 3).forEach(tag => { %>
+              <span class="tag"><%= getField(tag, 'zh') %></span>
+            <% }); %>
+          </div>
+        <% } %>
+      <% } %>
+    </a>
+  <% }); %>
+  <% if (items.length === 0) { %>
+    <div class="empty-state">
+      <p data-i18n="noContent">暂无内容</p>
+    </div>
+  <% } %>
+</div>
+
+<style>
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.list-container .card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.card-title {
+  margin: 0;
+  color: var(--link-color);
+  font-size: 1.1em;
+}
+
+.card-summary {
+  color: var(--text-secondary);
+  font-size: 0.95em;
+  margin: 0;
+}
+
+.list-container .tags {
+  margin-top: 8px;
+}
+</style>

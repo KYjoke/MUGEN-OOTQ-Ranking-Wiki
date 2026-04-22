@@ -19,22 +19,6 @@ function getField(val, lang) {
   return '';
 }
 
-function processMeta(meta, lang) {
-  const result = {};
-  for (const [key, val] of Object.entries(meta)) {
-    if (key === 'tags') {
-      result.tags = Array.isArray(val)
-        ? val.map(t => getField(t, lang))
-        : getField(val, lang);
-    } else if (key === 'description' || key === 'summary' || key === 'title' || key === 'ootqLevel') {
-      result[key] = getField(val, lang);
-    } else {
-      result[key] = val;
-    }
-  }
-  return result;
-}
-
 async function build() {
   await fs.emptyDir(DIST);
 
@@ -43,6 +27,7 @@ async function build() {
   const charListTemplate = await fs.readFile(path.join(SRC, 'templates', 'character-list.ejs'), 'utf8');
   const glossaryTemplate = await fs.readFile(path.join(SRC, 'templates', 'glossary.ejs'), 'utf8');
   const indexTemplate = await fs.readFile(path.join(SRC, 'templates', 'index.ejs'), 'utf8');
+  const listTemplate = await fs.readFile(path.join(SRC, 'templates', 'list.ejs'), 'utf8');
 
   await fs.copy(path.join(SRC, 'styles', 'main.css'), path.join(DIST, 'styles.css'));
   await fs.copy(path.join(SRC, 'scripts', 'i18n.js'), path.join(DIST, 'i18n.js'));
@@ -69,10 +54,6 @@ async function build() {
     }
   }
 
-  const charListContent = ejs.render(charListTemplate, { characters, r: (p) => rel(p, 1), getField });
-  const charListHtml = ejs.render(layoutTemplate, { title: 'Characters', content: charListContent, r: (p) => rel(p, 1), lang: 'zh' });
-  await fs.writeFile(path.join(DIST, 'characters', 'index.html'), charListHtml);
-
   const terms = [];
   const termDirs = await fs.readdir(path.join(CONTENT, 'glossary'));
   for (const slug of termDirs) {
@@ -87,25 +68,30 @@ async function build() {
     }
   }
 
-  const glossaryListContent = `
-    <div class="page-header">
-      <h1>Glossary</h1>
-      <p class="lead">All indexed terms</p>
-    </div>
-    <div class="card-grid">
-      ${terms.map(term => {
-        const title = getField(term.meta.title, 'zh');
-        const summary = getField(term.meta.summary, 'zh');
-        return `
-        <a class="card glossary-card" href="${rel('glossary/', 0)}${term.slug}/">
-          <h3 class="term-title">${title}</h3>
-          ${summary ? `<p class="term-summary">${summary}</p>` : ''}
-        </a>
-      `}).join('')}
-      ${terms.length === 0 ? '<div class="empty-state"><p>No terms yet</p></div>' : ''}
-    </div>
-  `;
-  const glossaryListHtml = ejs.render(layoutTemplate, { title: 'Glossary', content: glossaryListContent, r: (p) => rel(p, 0), lang: 'zh' });
+  const charListContent = ejs.render(listTemplate, {
+    items: characters,
+    itemType: 'char',
+    pageTitle: 'characters',
+    pageTitleZh: '角色',
+    leadKey: 'leadText',
+    leadZh: '所有已收录的角色列表',
+    r: (p) => rel(p, 1),
+    getField
+  });
+  const charListHtml = ejs.render(layoutTemplate, { title: 'Characters', content: charListContent, r: (p) => rel(p, 1), lang: 'zh' });
+  await fs.writeFile(path.join(DIST, 'characters', 'index.html'), charListHtml);
+
+  const glossaryListContent = ejs.render(listTemplate, {
+    items: terms,
+    itemType: 'term',
+    pageTitle: 'glossary',
+    pageTitleZh: '术语',
+    leadKey: 'noContent',
+    leadZh: '所有已收录的术语',
+    r: (p) => rel(p, 1),
+    getField
+  });
+  const glossaryListHtml = ejs.render(layoutTemplate, { title: 'Glossary', content: glossaryListContent, r: (p) => rel(p, 1), lang: 'zh' });
   await fs.writeFile(path.join(DIST, 'glossary', 'index.html'), glossaryListHtml);
 
   const indexContent = ejs.render(indexTemplate, { characters, terms, r: (p) => rel(p, 0), getField });
