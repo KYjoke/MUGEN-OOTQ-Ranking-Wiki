@@ -1,48 +1,53 @@
 <div class="character-page">
   <nav class="breadcrumb">
-    <a href="<%= r('') %>">首页</a>
+    <a href="<%= r('') %>" data-i18n="home">首页</a>
     <span>›</span>
-    <a href="<%= r('characters/') %>">角色</a>
+    <a href="<%= r('characters/') %>" data-i18n="characters">角色</a>
     <span>›</span>
-    <%= meta.title %>
+    <span data-i18n="title"><%= getField(meta.title, 'zh') %></span>
   </nav>
 
   <div class="infobox">
     <div class="infobox-header">
-      <h1><%= meta.title %></h1>
+      <h1 data-i18n="title"><%= getField(meta.title, 'zh') %></h1>
     </div>
     <% if (meta.image) { %>
       <div class="infobox-image">
-        <img src="<%= r('assets/') %><%= meta.image %>" alt="<%= meta.title %>">
+        <img src="<%= r('assets/') %><%= meta.image %>" alt="<%= getField(meta.title, 'zh') %>">
       </div>
     <% } else if (hasAssets) { %>
       <div class="infobox-image">
-        <img src="<%= r('assets/') %>cover.png" alt="<%= meta.title %>" onerror="this.style.display='none'">
+        <img src="<%= r('assets/') %>cover.png" alt="<%= getField(meta.title, 'zh') %>" onerror="this.style.display='none'">
       </div>
     <% } %>
     <table class="infobox-table">
       <% if (meta.ootqLevel) { %>
-        <tr><th>OOTQ 等级</th><td><%= meta.ootqLevel %></td></tr>
+        <tr><th data-i18n="ootqLevel">OOTQ 等级</th><td data-i18n="ootqLevel"><%= getField(meta.ootqLevel, 'zh') %></td></tr>
       <% } %>
       <% if (meta.origin) { %>
-        <tr><th>作品来源</th><td><%= meta.origin %></td></tr>
+        <tr><th data-i18n="origin">作品来源</th><td><%= meta.origin %></td></tr>
+      <% } %>
+      <% if (meta.activation) { %>
+        <tr><th data-i18n="activation">启动方式</th><td><%= meta.activation %></td></tr>
       <% } %>
       <% if (meta.tags && meta.tags.length) { %>
-        <tr><th>标签</th><td><div class="tags"><% meta.tags.forEach(tag => { %><span class="tag"><%= tag %></span><% }); %></div></td></tr>
+        <tr><th data-i18n="tags">标签</th><td><div class="tags"><% (Array.isArray(meta.tags) ? meta.tags : meta.tags.zh || []).forEach(tag => { %><span class="tag"><%= tag %></span><% }); %></div></td></tr>
       <% } %>
     </table>
   </div>
 
   <div class="article-body">
     <% if (meta.summary) { %>
-      <p class="lead"><%= meta.summary %></p>
+      <p class="lead" data-i18n="summary"><%= getField(meta.summary, 'zh') %></p>
     <% } %>
-    <%- meta.description || '<p class="empty">暂无详细描述</p>' %>
+    <div data-i18n="description">
+      <%- getField(meta.description, 'zh') || '<p class="empty">暂无详细描述</p>' %>
+    </div>
   </div>
 
   <% if (meta.links && meta.links.length) { %>
     <div class="section">
-      <h2>相关链接</h2>
+      <h2 data-i18n="relatedLinks">相关链接</h2>
       <ul class="link-list">
         <% meta.links.forEach(link => { %>
           <li><a href="<%= link.url %>" target="_blank" rel="noopener"><%= link.name %></a></li>
@@ -51,6 +56,10 @@
     </div>
   <% } %>
 </div>
+
+<script>
+window.__meta = <%- JSON.stringify(meta) %>;
+</script>
 
 <style>
 .character-page {

@@ -35,40 +35,47 @@
   <main class="container">
     <div class="character-page">
   <nav class="breadcrumb">
-    <a href="../">首页</a>
+    <a href="../" data-i18n="home">首页</a>
     <span>›</span>
-    <a href="../characters/">角色</a>
+    <a href="../characters/" data-i18n="characters">角色</a>
     <span>›</span>
-    l_reimu
+    <span data-i18n="title">l_reimu</span>
   </nav>
 
   <div class="infobox">
     <div class="infobox-header">
-      <h1>l_reimu</h1>
+      <h1 data-i18n="title">l_reimu</h1>
     </div>
     
     <table class="infobox-table">
       
-        <tr><th>OOTQ 等级</th><td>论外中位A</td></tr>
+        <tr><th data-i18n="ootqLevel">OOTQ 等级</th><td data-i18n="ootqLevel">论外中位A</td></tr>
       
       
-        <tr><th>作品来源</th><td>MUGEN</td></tr>
+        <tr><th data-i18n="origin">作品来源</th><td>MUGEN</td></tr>
       
       
-        <tr><th>标签</th><td><div class="tags"><span class="tag">论外中位</span><span class="tag">A级</span><span class="tag">%N启动</span><span class="tag">DTC型亲捏造</span><span class="tag">Player消去</span></div></td></tr>
+        <tr><th data-i18n="activation">启动方式</th><td>%N启动</td></tr>
+      
       
     </table>
   </div>
 
   <div class="article-body">
     
-      <p class="lead">论外中位A参照角色，Player消去型</p>
+      <p class="lead" data-i18n="summary">论外中位A参照角色，Player消去型</p>
     
-    <p>论外中位A参照角色。drab氏作品，7~12P可变使用。</p><h2>技术特点</h2><p>使用DTC型亲捏造技术，可执行Player消去攻击，直接让敌方角色消失。</p>
+    <div data-i18n="description">
+      <p>论外中位A参照角色。drab氏作品，7~12P可变使用。</p><h2>技术特点</h2><p>使用DTC型亲捏造技术，可执行Player消去攻击，直接让敌方角色消失。</p>
+    </div>
   </div>
 
   
 </div>
+
+<script>
+window.__meta = {"title":{"zh":"l_reimu","en":"l_reimu","ja":"l_reimu"},"summary":{"zh":"论外中位A参照角色，Player消去型","en":"Out-of-Topic Mid-A Reference, Player Erasure Type","ja":"論外中位A参照キャラクター、Player消去型"},"ootqLevel":{"zh":"论外中位A","en":"Out-of-Topic Mid-A","ja":"論外中位A"},"ootqTier":"mid","origin":"MUGEN","author":"drab氏","tags":{"zh":["论外中位","A级","%N启动","DTC型亲捏造","Player消去"],"en":["Out-of-Topic Mid","A-Class","%N Activation","DTC Parent-Fabrication","Player Erasure"],"ja":["論外中位","A级","%N起動","DTC型親捏造","Player消去"]},"activation":"%N启动","techniques":["DTC型亲捏造:Player消去","强制胜利"],"description":{"zh":"<p>论外中位A参照角色。drab氏作品，7~12P可变使用。</p><h2>技术特点</h2><p>使用DTC型亲捏造技术，可执行Player消去攻击，直接让敌方角色消失。</p>","en":"<p>Out-of-Topic Mid-A reference character by drab氏, usable as 7~12P variable.</p><h2>Technical Features</h2><p>Uses DTC parent-fabrication technique to execute Player erasure attacks, directly removing enemy characters.</p>","ja":"<p>論外中位A参照キャラクター。drab氏作品、7~12P可変使用。</p><h2>技術的特徴</h2><p>DTC型親捏造技術を使用し、Player消去攻撃を実行して敵キャラクターを消滅させる。</p>"}};
+</script>
 
 <style>
 .character-page {

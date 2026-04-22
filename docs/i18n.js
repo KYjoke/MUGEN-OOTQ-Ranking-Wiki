@@ -6,7 +6,13 @@ const translations = {
     search: "搜索...",
     relatedLinks: "相关链接",
     noContent: "暂无内容",
-    tags: "标签"
+    tags: "标签",
+    ootqLevel: "OOTQ 等级",
+    origin: "作品来源",
+    activation: "启动方式",
+    summary: "摘要",
+    description: "详情",
+    title: "标题"
   },
   en: {
     home: "Home",
@@ -15,7 +21,13 @@ const translations = {
     search: "Search...",
     relatedLinks: "Related Links",
     noContent: "No content yet",
-    tags: "Tags"
+    tags: "Tags",
+    ootqLevel: "OOTQ Level",
+    origin: "Origin",
+    activation: "Activation",
+    summary: "Summary",
+    description: "Details",
+    title: "Title"
   },
   ja: {
     home: "ホーム",
@@ -24,7 +36,13 @@ const translations = {
     search: "検索...",
     relatedLinks: "関連リンク",
     noContent: "コンテンツなし",
-    tags: "タグ"
+    tags: "タグ",
+    ootqLevel: "OOTQ 等級",
+    origin: "作品來源",
+    activation: "起動方式",
+    summary: "要約",
+    description: "詳細",
+    title: "タイトル"
   }
 };
 
@@ -36,6 +54,14 @@ function getStoredTheme() {
 
 function getStoredLang() {
   return localStorage.getItem("lang") || "zh";
+}
+
+function getField(val, lang) {
+  if (typeof val === 'string') return val;
+  if (typeof val === 'object' && val !== null) {
+    return val[lang] || val.zh || '';
+  }
+  return '';
 }
 
 function applyTheme(theme) {
@@ -56,15 +82,40 @@ function applyLang(lang) {
   localStorage.setItem("lang", lang);
   document.documentElement.lang = lang;
   const t = translations[lang] || translations.zh;
+
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
     if (t[key]) el.textContent = t[key];
   });
+
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
     const key = el.getAttribute("data-i18n-placeholder");
     if (t[key]) el.placeholder = t[key];
   });
+
+  if (window.__meta) {
+    applyContentLang(window.__meta, lang);
+  }
+
   updateLangSelect(lang);
+}
+
+function applyContentLang(meta, lang) {
+  const fields = ['title', 'summary', 'description', 'ootqLevel'];
+  for (const field of fields) {
+    if (meta[field]) {
+      const el = document.querySelector(`[data-i18n="${field}"]`);
+      if (el) el.innerHTML = getField(meta[field], lang);
+    }
+  }
+
+  if (meta.tags) {
+    const tagsEl = document.querySelector('.infobox-table td .tags');
+    if (tagsEl && Array.isArray(meta.tags)) {
+      const tags = meta.tags.map(t => getField(t, lang));
+      tagsEl.innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+    }
+  }
 }
 
 function updateLangSelect(lang) {

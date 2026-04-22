@@ -1,5 +1,17 @@
 {
-  "title": "Shellcode",
-  "summary": "在内存中执行恶意代码的攻击技术",
-  "description": "<p>shellcode是一段在内存中执行的恶意代码，通过缓冲区溢出等漏洞注入。</p><h2>原理</h2><p>程序的数据和代码在内存中无法区分，攻击者通过溢出覆盖返回地址，使程序跳转到恶意代码执行。</p><h2>在MUGEN中的应用</h2><p>通过StateDef溢出、CMD溢出、Flag溢出等技术在MUGEN中执行shellcode。</p>"
+  "title": {
+    "zh": "Shellcode",
+    "en": "Shellcode",
+    "ja": "Shellcode"
+  },
+  "summary": {
+    "zh": "在内存中执行恶意代码的攻击技术",
+    "en": "Attack technique that executes malicious code in memory",
+    "ja": "メモリ内で悪意のあるコードを実行する攻撃技術"
+  },
+  "description": {
+    "zh": "<p>shellcode是一段在内存中执行的恶意代码，通过缓冲区溢出等漏洞注入。</p><h2>原理</h2><p>程序的数据和代码在内存中无法区分，攻击者通过溢出覆盖返回地址，使程序跳转到恶意代码执行。</p><h2>在MUGEN中的应用</h2><p>通过StateDef溢出、CMD溢出、Flag溢出等技术在MUGEN中执行shellcode。</p>",
+    "en": "<p>Shellcode is malicious code executed in memory, injected through buffer overflow vulnerabilities.</p><h2>Principle</h2><p>Since program data and code cannot be distinguished in memory, attackers overflow to overwrite return addresses, causing the program to jump to and execute malicious code.</p><h2>Application in MUGEN</h2><p>Executes shellcode in MUGEN through StateDef overflow, CMD overflow, Flag overflow, etc.</p>",
+    "ja": "<p>Shellcodeはメモリ内で実行される悪意のあるコードで、バッファオーバーフロー等の脆弱性を介して注入される。</p><h2>原理</h2><p>プログラムのデータとコードはメモリ内で区別できないため、攻撃者は溢出去覆盖返回アドレスし、プログラムを悪意のあるコードにジャンプさせる。</p><h2>MUGENでの応用</h2><p>StateDef溢出、CMD溢出、Flag溢出等の技術でMUGEN内でshellcodeを実行。</p>"
+  }
 }

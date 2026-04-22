@@ -4,18 +4,24 @@
     <span>›</span>
     <a href="<%= r('glossary/') %>" data-i18n="glossary">术语</a>
     <span>›</span>
-    <%= meta.title %>
+    <span data-i18n="title"><%= getField(meta.title, 'zh') %></span>
   </nav>
 
-  <h1><%= meta.title %></h1>
+  <h1 data-i18n="title"><%= getField(meta.title, 'zh') %></h1>
 
   <% if (meta.summary) { %>
     <div class="info-box">
-      <p><%= meta.summary %></p>
+      <p data-i18n="summary"><%= getField(meta.summary, 'zh') %></p>
     </div>
   <% } %>
 
   <div class="content-body">
-    <%- meta.description || '<p data-i18n="noContent">暂无详细描述</p>' %>
+    <div data-i18n="description">
+      <%- getField(meta.description, 'zh') || '<p data-i18n="noContent">暂无详细描述</p>' %>
+    </div>
   </div>
 </div>
+
+<script>
+window.__meta = <%- JSON.stringify(meta) %>;
+</script>

@@ -1,5 +1,17 @@
 {
-  "title": "亲捏造",
-  "summary": "直接操作内存地址的攻击技术",
-  "description": "<p>亲捏造是MUGEN中通过Parent内存地址作为跳板，直接记录和映射主程序地址以任意修改内存的技术。</p><h2>原理</h2><p>通过修改Alive、LIFE等关键内存地址实现直死、强制伤害等效果。</p><h2>变量扩张型亲捏造</h2><p>由sinoiha发明，启动后调用API申请虚拟内存空间修改源代码扩展游戏变量，将内存地址映射到扩展的游戏变量上直接操作。</p>"
+  "title": {
+    "zh": "亲捏造",
+    "en": "Parent-Fabrication",
+    "ja": "親捏造"
+  },
+  "summary": {
+    "zh": "直接操作内存地址的攻击技术",
+    "en": "Attack technique for direct memory address manipulation",
+    "ja": "メモリアドレスを直接操作する攻撃技術"
+  },
+  "description": {
+    "zh": "<p>亲捏造是MUGEN中通过Parent内存地址作为跳板，直接记录和映射主程序地址以任意修改内存的技术。</p><h2>原理</h2><p>通过修改Alive、LIFE等关键内存地址实现直死、强制伤害等效果。</p><h2>变量扩张型亲捏造</h2><p>由sinoiha发明，启动后调用API申请虚拟内存空间修改源代码扩展游戏变量，将内存地址映射到扩展的游戏变量上直接操作。</p>",
+    "en": "<p>Parent-fabrication is a MUGEN technique that uses Parent memory addresses as a springboard to directly record and map main program addresses for arbitrary memory modification.</p><h2>Principle</h2><p>Achieves instant death, forced damage effects by modifying key memory addresses like Alive and LIFE.</p><h2>Variable Expansion Type</h2><p>Invented by sinoha, after activation calls API to apply for virtual memory space, modifies source code to expand game variables, maps memory addresses to expanded variables for direct operation.</p>",
+    "ja": "<p>親捏造はMUGENでParentメモリアドレスを踏み台として、主プログラムアドレスを直接記録・マッピングしてメモリを任意改変する技術。</p><h2>原理</h2><p>Alive、LIFE等の重要なメモリアドレスを変更することで直死、強制ダメージ等を達成。</p><h2>変数拡張型親捏造</h2><p>sinoihaの発明で、起動後にAPIを呼び出して仮想メモリ空間を申請し、ソースコードを改変してゲーム変数を拡張、メモリアドレスを拡張したゲーム変数にマッピングして直接操作。</p>"
+  }
 }

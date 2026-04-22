@@ -1,12 +1,32 @@
 {
-  "title": "l_reimu",
-  "summary": "论外中位A参照角色，Player消去型",
-  "ootqLevel": "论外中位A",
+  "title": {
+    "zh": "l_reimu",
+    "en": "l_reimu",
+    "ja": "l_reimu"
+  },
+  "summary": {
+    "zh": "论外中位A参照角色，Player消去型",
+    "en": "Out-of-Topic Mid-A Reference, Player Erasure Type",
+    "ja": "論外中位A参照キャラクター、Player消去型"
+  },
+  "ootqLevel": {
+    "zh": "论外中位A",
+    "en": "Out-of-Topic Mid-A",
+    "ja": "論外中位A"
+  },
   "ootqTier": "mid",
   "origin": "MUGEN",
   "author": "drab氏",
-  "tags": ["论外中位", "A级", "%N启动", "DTC型亲捏造", "Player消去"],
+  "tags": {
+    "zh": ["论外中位", "A级", "%N启动", "DTC型亲捏造", "Player消去"],
+    "en": ["Out-of-Topic Mid", "A-Class", "%N Activation", "DTC Parent-Fabrication", "Player Erasure"],
+    "ja": ["論外中位", "A级", "%N起動", "DTC型親捏造", "Player消去"]
+  },
   "activation": "%N启动",
   "techniques": ["DTC型亲捏造:Player消去", "强制胜利"],
-  "description": "<p>论外中位A参照角色。drab氏作品，7~12P可变使用。</p><h2>技术特点</h2><p>使用DTC型亲捏造技术，可执行Player消去攻击，直接让敌方角色消失。</p>"
+  "description": {
+    "zh": "<p>论外中位A参照角色。drab氏作品，7~12P可变使用。</p><h2>技术特点</h2><p>使用DTC型亲捏造技术，可执行Player消去攻击，直接让敌方角色消失。</p>",
+    "en": "<p>Out-of-Topic Mid-A reference character by drab氏, usable as 7~12P variable.</p><h2>Technical Features</h2><p>Uses DTC parent-fabrication technique to execute Player erasure attacks, directly removing enemy characters.</p>",
+    "ja": "<p>論外中位A参照キャラクター。drab氏作品、7~12P可変使用。</p><h2>技術的特徴</h2><p>DTC型親捏造技術を使用し、Player消去攻撃を実行して敵キャラクターを消滅させる。</p>"
+  }
 }

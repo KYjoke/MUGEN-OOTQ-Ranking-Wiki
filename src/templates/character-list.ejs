@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>角色</h1>
+  <h1 data-i18n="characters">角色</h1>
   <p class="lead">所有已收录的角色列表</p>
 </div>
 
@@ -7,17 +7,17 @@
   <% characters.forEach(char => { %>
     <a class="card" href="<%= r('') %><%= char.slug %>/">
       <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-        <h3 style="margin:0;"><%= char.title %></h3>
-        <% if (char.ootqLevel) { %>
-          <span class="ootq-badge ootq-<%= char.ootqTier || 'low' %>"><%= char.ootqLevel %></span>
+        <h3 style="margin:0;"><%= getField(char.meta.title, 'zh') %></h3>
+        <% if (char.meta.ootqLevel) { %>
+          <span class="ootq-badge ootq-<%= char.meta.ootqTier || 'low' %>"><%= getField(char.meta.ootqLevel, 'zh') %></span>
         <% } %>
       </div>
-      <% if (char.summary) { %>
-        <p><%= char.summary %></p>
+      <% if (char.meta.summary) { %>
+        <p><%= getField(char.meta.summary, 'zh') %></p>
       <% } %>
-      <% if (char.tags && char.tags.length) { %>
+      <% if (char.meta.tags && char.meta.tags.length) { %>
         <div class="tags">
-          <% char.tags.slice(0, 4).forEach(tag => { %>
+          <% (Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || [])).slice(0, 4).forEach(tag => { %>
             <span class="tag"><%= tag %></span>
           <% }); %>
         </div>
@@ -26,7 +26,7 @@
   <% }); %>
   <% if (characters.length === 0) { %>
     <div class="empty-state">
-      <p>暂无角色</p>
+      <p data-i18n="noContent">暂无角色</p>
     </div>
   <% } %>
 </div>
