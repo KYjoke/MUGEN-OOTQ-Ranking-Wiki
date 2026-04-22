@@ -98,6 +98,10 @@ async function build() {
   const indexHtml = ejs.render(layoutTemplate, { title: 'MUGEN OOTQ Ranking Wiki', content: indexContent, r: (p) => rel(p, 0), lang: 'zh' });
   await fs.writeFile(path.join(DIST, 'index.html'), indexHtml);
 
+  const editTemplate = await fs.readFile(path.join(SRC, 'templates', 'edit.ejs'), 'utf8');
+  const editHtml = ejs.render(editTemplate, { title: '编辑角色', isEdit: false, slug: null });
+  await fs.writeFile(path.join(DIST, 'edit.html'), editHtml);
+
   console.log('Build complete! Output in docs/');
 }
 

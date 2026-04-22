@@ -18,7 +18,9 @@ const translations = {
     tierHigh: "论外上位",
     tierMid: "论外中位",
     tierLow: "论外下位",
-    leadText: "所有已收录的角色列表"
+    leadText: "所有已收录的角色列表",
+    newEntry: "新建",
+    edit: "编辑"
   },
   en: {
     home: "Home",
@@ -39,7 +41,9 @@ const translations = {
     tierHigh: "High",
     tierMid: "Mid",
     tierLow: "Low",
-    leadText: "All indexed characters"
+    leadText: "All indexed characters",
+    newEntry: "New",
+    edit: "Edit"
   },
   ja: {
     home: "ホーム",
@@ -60,7 +64,9 @@ const translations = {
     tierHigh: "論外上位",
     tierMid: "論外中位",
     tierLow: "論外下位",
-    leadText: "すべての登録済みキャラクター"
+    leadText: "すべての登録済みキャラクター",
+    newEntry: "新規",
+    edit: "編集"
   }
 };
 
