@@ -44,6 +44,7 @@
 
 
 <div class="tag-filter" id="tagFilter">
+  <span style="margin-right:8px;font-weight:bold;">强度:</span>
   <button class="tag-btn active" data-tag="all">全部</button>
   
   
@@ -66,11 +67,139 @@
     <button class="tag-btn" data-tag="论外中位">论外中位</button>
   
 </div>
+<div class="tag-filter" id="techFilter">
+  <span style="margin-right:8px;font-weight:bold;">启动技术:</span>
+  <button class="tag-btn active" data-tech="all">全部</button>
+  
+  
+    <button class="tag-btn" data-tech="%F无效时报错">%F无效时报错</button>
+  
+    <button class="tag-btn" data-tech="1024溢出(Textbug)阻止">1024溢出(Textbug)阻止</button>
+  
+    <button class="tag-btn" data-tech="API调用多线程:DEF保护">API调用多线程:DEF保护</button>
+  
+    <button class="tag-btn" data-tech="API调用多线程:直死">API调用多线程:直死</button>
+  
+    <button class="tag-btn" data-tech="API调用多线程:随阶段增长复合攻击">API调用多线程:随阶段增长复合攻击</button>
+  
+    <button class="tag-btn" data-tech="API调用源代码修改:%F阻止">API调用源代码修改:%F阻止</button>
+  
+    <button class="tag-btn" data-tech="API调用源代码修改:CNS指回">API调用源代码修改:CNS指回</button>
+  
+    <button class="tag-btn" data-tech="API调用线程休眠:线程杀手">API调用线程休眠:线程杀手</button>
+  
+    <button class="tag-btn" data-tech="CNS填塞">CNS填塞</button>
+  
+    <button class="tag-btn" data-tech="CNS指回">CNS指回</button>
+  
+    <button class="tag-btn" data-tech="CNS指空">CNS指空</button>
+  
+    <button class="tag-btn" data-tech="DEF保护">DEF保护</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:LIFE弄">DTC型亲捏造:LIFE弄</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:Player消去">DTC型亲捏造:Player消去</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:intro解除">DTC型亲捏造:intro解除</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:冻结直死">DTC型亲捏造:冻结直死</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:冻结解除">DTC型亲捏造:冻结解除</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:直死">DTC型亲捏造:直死</button>
+  
+    <button class="tag-btn" data-tech="DTC型亲捏造:随阶段增长复合攻击">DTC型亲捏造:随阶段增长复合攻击</button>
+  
+    <button class="tag-btn" data-tech="DTC阻止">DTC阻止</button>
+  
+    <button class="tag-btn" data-tech="Def指向改">Def指向改</button>
+  
+    <button class="tag-btn" data-tech="LIFE弄">LIFE弄</button>
+  
+    <button class="tag-btn" data-tech="Life弄">Life弄</button>
+  
+    <button class="tag-btn" data-tech="NOKO解除">NOKO解除</button>
+  
+    <button class="tag-btn" data-tech="Noko解除">Noko解除</button>
+  
+    <button class="tag-btn" data-tech="Player保护">Player保护</button>
+  
+    <button class="tag-btn" data-tech="Player消去">Player消去</button>
+  
+    <button class="tag-btn" data-tech="RoundState弄">RoundState弄</button>
+  
+    <button class="tag-btn" data-tech="RoundTimer弄">RoundTimer弄</button>
+  
+    <button class="tag-btn" data-tech="RoundTimer改">RoundTimer改</button>
+  
+    <button class="tag-btn" data-tech="ST文件无效化">ST文件无效化</button>
+  
+    <button class="tag-btn" data-tech="StateDef溢出修复">StateDef溢出修复</button>
+  
+    <button class="tag-btn" data-tech="Timerfreeze解除">Timerfreeze解除</button>
+  
+    <button class="tag-btn" data-tech="noko解除">noko解除</button>
+  
+    <button class="tag-btn" data-tech="全局变量Hook">全局变量Hook</button>
+  
+    <button class="tag-btn" data-tech="全领域Player消去">全领域Player消去</button>
+  
+    <button class="tag-btn" data-tech="全领域属性攻击">全领域属性攻击</button>
+  
+    <button class="tag-btn" data-tech="全领域防御">全领域防御</button>
+  
+    <button class="tag-btn" data-tech="冻结解除">冻结解除</button>
+  
+    <button class="tag-btn" data-tech="变量扩张型亲捏造:全领域属性攻击">变量扩张型亲捏造:全领域属性攻击</button>
+  
+    <button class="tag-btn" data-tech="变量扩张型亲捏造:强制永续">变量扩张型亲捏造:强制永续</button>
+  
+    <button class="tag-btn" data-tech="变量扩张型亲捏造:直死">变量扩张型亲捏造:直死</button>
+  
+    <button class="tag-btn" data-tech="地址转移">地址转移</button>
+  
+    <button class="tag-btn" data-tech="多线程锁值">多线程锁值</button>
+  
+    <button class="tag-btn" data-tech="大量地址改源">大量地址改源</button>
+  
+    <button class="tag-btn" data-tech="强制Damage">强制Damage</button>
+  
+    <button class="tag-btn" data-tech="强制Palno弄">强制Palno弄</button>
+  
+    <button class="tag-btn" data-tech="强制变数弄">强制变数弄</button>
+  
+    <button class="tag-btn" data-tech="强制投">强制投</button>
+  
+    <button class="tag-btn" data-tech="强制时停">强制时停</button>
+  
+    <button class="tag-btn" data-tech="强制胜利">强制胜利</button>
+  
+    <button class="tag-btn" data-tech="强制落下">强制落下</button>
+  
+    <button class="tag-btn" data-tech="无敌解除">无敌解除</button>
+  
+    <button class="tag-btn" data-tech="替换主程序文件">替换主程序文件</button>
+  
+    <button class="tag-btn" data-tech="未知">未知</button>
+  
+    <button class="tag-btn" data-tech="游戏内联Call调用">游戏内联Call调用</button>
+  
+    <button class="tag-btn" data-tech="溢出无效时140循环卡死">溢出无效时140循环卡死</button>
+  
+    <button class="tag-btn" data-tech="溢出无效时DEF指向错误报错">溢出无效时DEF指向错误报错</button>
+  
+    <button class="tag-btn" data-tech="直死">直死</button>
+  
+    <button class="tag-btn" data-tech="苏生">苏生</button>
+  
+    <button class="tag-btn" data-tech="重装人物替换自身">重装人物替换自身</button>
+  
+</div>
 
 
 <div class="list-container" id="listContainer" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
   
-    <a class="card char-card" href="Chizomeno/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Chizomeno/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;C级&#34;]' data-techs='[&#34;DTC型亲捏造:LIFE弄&#34;,&#34;noko解除&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Chizomeno.png" alt="Chizomeno" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -99,7 +228,7 @@
       
     </a>
   
-    <a class="card char-card" href="Crazy-Catastrophe/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Crazy-Catastrophe/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;C级&#34;]' data-techs='[&#34;DTC型亲捏造:直死&#34;,&#34;强制Palno弄&#34;,&#34;强制Damage&#34;,&#34;强制落下&#34;,&#34;强制投&#34;,&#34;强制胜利&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Crazy-Catastrophe.png" alt="Crazy-Catastrophe" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -128,7 +257,7 @@
       
     </a>
   
-    <a class="card char-card" href="EX_Akabane/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="EX_Akabane/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;A级&#34;]' data-techs='[&#34;API调用多线程:直死&#34;,&#34;NOKO解除&#34;,&#34;Player消去&#34;,&#34;CNS指回&#34;,&#34;Player保护&#34;,&#34;%F无效时报错&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/EX_Akabane.png" alt="EX_Akabane" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -157,7 +286,7 @@
       
     </a>
   
-    <a class="card char-card" href="Guanyin-Ancient/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Guanyin-Ancient/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;C级&#34;]' data-techs='[&#34;CNS指空&#34;,&#34;全局变量Hook&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Guanyin-Ancient.png" alt="Guanyin-Ancient" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -186,7 +315,7 @@
       
     </a>
   
-    <a class="card char-card" href="Hawk-eye-Youmu/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Hawk-eye-Youmu/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;C级&#34;]' data-techs='[&#34;变量扩张型亲捏造:强制永续&#34;,&#34;强制Damage&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Hawk eye Youmu.png" alt="Hawk eye Youmu" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -215,7 +344,7 @@
       
     </a>
   
-    <a class="card char-card" href="Ice-Oro-Mizuchi/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Ice-Oro-Mizuchi/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;C级&#34;]' data-techs='[&#34;StateDef溢出修复&#34;,&#34;DTC型亲捏造:Player消去&#34;,&#34;强制胜利&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Ice-Oro-Mizuchi.png" alt="Ice-Oro-Mizuchi" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -244,7 +373,7 @@
       
     </a>
   
-    <a class="card char-card" href="Infinite-Soulabyss/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Infinite-Soulabyss/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;A级&#34;]' data-techs='[&#34;API调用多线程:随阶段增长复合攻击&#34;,&#34;全领域防御&#34;,&#34;DEF保护&#34;,&#34;CNS指回&#34;,&#34;Player保护&#34;,&#34;溢出无效时140循环卡死&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Infinite Soulabyss.png" alt="Infinite Soulabyss" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -273,7 +402,7 @@
       
     </a>
   
-    <a class="card char-card" href="Infinity-Zero/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Infinity-Zero/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;A级&#34;]' data-techs='[&#34;DTC型亲捏造:随阶段增长复合攻击&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Infinity-Zero.png" alt="Infinity-Zero" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -302,7 +431,7 @@
       
     </a>
   
-    <a class="card char-card" href="Iod/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Iod/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;A级&#34;]' data-techs='[&#34;DTC型亲捏造:冻结直死&#34;,&#34;Life弄&#34;,&#34;冻结解除&#34;,&#34;苏生&#34;,&#34;RoundTimer弄&#34;,&#34;RoundState弄&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Iod.png" alt="Iod" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -331,7 +460,7 @@
       
     </a>
   
-    <a class="card char-card" href="Killer/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Killer/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;B级&#34;]' data-techs='[&#34;StateDef溢出修复&#34;,&#34;CNS指空&#34;,&#34;直死&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/-Killer-.png" alt="-Killer-" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -360,7 +489,7 @@
       
     </a>
   
-    <a class="card char-card" href="Legend-Accelerator/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Legend-Accelerator/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;B级&#34;]' data-techs='[&#34;DTC型亲捏造:冻结解除&#34;,&#34;直死&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Legend Accelerator.png" alt="Legend Accelerator" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -389,7 +518,7 @@
       
     </a>
   
-    <a class="card char-card" href="LindWurm/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="LindWurm/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' data-techs='[&#34;Def指向改&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/LindWurm.png" alt="LindWurm" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -416,7 +545,7 @@
       
     </a>
   
-    <a class="card char-card" href="M-Reimu/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="M-Reimu/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;A级&#34;]' data-techs='[&#34;变量扩张型亲捏造:直死&#34;,&#34;NOKO解除&#34;,&#34;全领域属性攻击&#34;,&#34;全领域Player消去&#34;,&#34;API调用源代码修改:CNS指回&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;M-Reimu ver3.11&#34;,&#34;en&#34;:&#34;M-Reimu ver3.11&#34;,&#34;ja&#34;:&#34;M-Reimu ver3.11&#34;}'>M-Reimu ver3.11</h3>
@@ -443,7 +572,7 @@
       
     </a>
   
-    <a class="card char-card" href="Oni-Miko-Z/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Oni-Miko-Z/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;B级&#34;]' data-techs='[&#34;直死&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Oni-Miko-Z.png" alt="Oni-Miko-Z" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -472,7 +601,7 @@
       
     </a>
   
-    <a class="card char-card" href="Rlyeh-Text-Special/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Rlyeh-Text-Special/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;B级&#34;]' data-techs='[&#34;StateDef溢出修复&#34;,&#34;API调用源代码修改:%F阻止&#34;,&#34;1024溢出(Textbug)阻止&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/R&#39;lyeh Text-Special.png" alt="R&#39;lyeh Text-Special" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -501,7 +630,7 @@
       
     </a>
   
-    <a class="card char-card" href="S-Sakuya/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="S-Sakuya/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;C级&#34;]' data-techs='[&#34;DTC型亲捏造:直死&#34;,&#34;Noko解除&#34;,&#34;无敌解除&#34;,&#34;强制Damage&#34;,&#34;强制落下&#34;,&#34;强制变数弄&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/S-Sakuya.png" alt="S-Sakuya" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -530,7 +659,7 @@
       
     </a>
   
-    <a class="card char-card" href="Sade-Margarita/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Sade-Margarita/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' data-techs='[&#34;未知&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Sade Margarita&#34;,&#34;en&#34;:&#34;Sade Margarita&#34;,&#34;ja&#34;:&#34;Sade Margarita&#34;}'>Sade Margarita</h3>
@@ -555,7 +684,7 @@
       
     </a>
   
-    <a class="card char-card" href="SuperPony/" data-tags='[&#34;参照&#34;,&#34;接近超论外中位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="SuperPony/" data-tags='[&#34;参照&#34;,&#34;接近超论外中位&#34;]' data-techs='[&#34;替换主程序文件&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/SuperPony.png" alt="SuperPony" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -582,7 +711,7 @@
       
     </a>
   
-    <a class="card char-card" href="Ult-Igniz/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Ult-Igniz/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;A级&#34;]' data-techs='[&#34;Def指向改&#34;,&#34;API调用线程休眠:线程杀手&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Ult-Igniz.png" alt="Ult-Igniz" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -611,7 +740,7 @@
       
     </a>
   
-    <a class="card char-card" href="Undefined-Universe/" data-tags='[&#34;参照&#34;,&#34;接近超论外中位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Undefined-Universe/" data-tags='[&#34;参照&#34;,&#34;接近超论外中位&#34;]' data-techs='[&#34;未知&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Undefined Universe (4.3b)&#34;,&#34;en&#34;:&#34;Undefined Universe (4.3b)&#34;,&#34;ja&#34;:&#34;Undefined Universe (4.3b)&#34;}'>Undefined Universe (4.3b)</h3>
@@ -636,7 +765,7 @@
       
     </a>
   
-    <a class="card char-card" href="Vinzelles-SPBOF/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Vinzelles-SPBOF/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' data-techs='[&#34;ST文件无效化&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Vinzelles-SPBOF.png" alt="Vinzelles-SPBOF" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -663,7 +792,7 @@
       
     </a>
   
-    <a class="card char-card" href="Volcrz-R/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Volcrz-R/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;C级&#34;]' data-techs='[&#34;DTC型亲捏造:冻结解除&#34;,&#34;直死&#34;,&#34;强制投&#34;,&#34;强制时停&#34;,&#34;强制胜利&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Volcrz-R.png" alt="Volcrz-R" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -692,7 +821,7 @@
       
     </a>
   
-    <a class="card char-card" href="WickedYagami/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="WickedYagami/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;A级&#34;]' data-techs='[&#34;StateDef溢出修复&#34;,&#34;API调用多线程:DEF保护&#34;,&#34;CNS指回&#34;,&#34;Player保护&#34;,&#34;CNS填塞&#34;,&#34;DTC阻止&#34;,&#34;溢出无效时DEF指向错误报错&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/WickedYagami.png" alt="WickedYagami" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -721,7 +850,7 @@
       
     </a>
   
-    <a class="card char-card" href="Wicked_Laws_Witch/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Wicked_Laws_Witch/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;B级&#34;]' data-techs='[&#34;变量扩张型亲捏造:全领域属性攻击&#34;,&#34;全领域Player消去&#34;,&#34;API调用源代码修改:CNS指回&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Wicked_Law&#39;s_Witch.png" alt="Wicked_Law&#39;s_Witch" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -750,7 +879,7 @@
       
     </a>
   
-    <a class="card char-card" href="Wind-Thunder-Sword-Youmu/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="Wind-Thunder-Sword-Youmu/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;B级&#34;]' data-techs='[&#34;变量扩张型亲捏造:强制永续&#34;,&#34;直死&#34;,&#34;LIFE弄&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/Wind Thunder Sword Youmu.png" alt="Wind Thunder Sword Youmu" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -779,7 +908,7 @@
       
     </a>
   
-    <a class="card char-card" href="_reimu111/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="_reimu111/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' data-techs='[&#34;地址转移&#34;,&#34;大量地址改源&#34;,&#34;游戏内联Call调用&#34;,&#34;多线程锁值&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/_reimu111.png" alt="_reimu111" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -806,7 +935,7 @@
       
     </a>
   
-    <a class="card char-card" href="dsrugal/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="dsrugal/" data-tags='[&#34;参照&#34;,&#34;论外上位&#34;,&#34;C级&#34;]' data-techs='[&#34;Def指向改&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/dsrugal.png" alt="dsrugal" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -835,7 +964,7 @@
       
     </a>
   
-    <a class="card char-card" href="duang/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;C级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="duang/" data-tags='[&#34;参照&#34;,&#34;论外下位&#34;,&#34;C级&#34;]' data-techs='[&#34;强制胜利&#34;,&#34;RoundTimer改&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/duang.png" alt="duang" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -864,7 +993,7 @@
       
     </a>
   
-    <a class="card char-card" href="l-reimu/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;A级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="l-reimu/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;A级&#34;]' data-techs='[&#34;DTC型亲捏造:Player消去&#34;,&#34;强制胜利&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;l_reimu&#34;,&#34;en&#34;:&#34;l_reimu&#34;,&#34;ja&#34;:&#34;l_reimu&#34;}'>l_reimu</h3>
@@ -891,7 +1020,7 @@
       
     </a>
   
-    <a class="card char-card" href="nihil/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="nihil/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' data-techs='[&#34;未知&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/nihil.png" alt="nihil" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -918,7 +1047,7 @@
       
     </a>
   
-    <a class="card char-card" href="winghigt-Akane-R16/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;B级&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="winghigt-Akane-R16/" data-tags='[&#34;参照&#34;,&#34;论外中位&#34;,&#34;B级&#34;]' data-techs='[&#34;直死&#34;,&#34;CNS指空&#34;,&#34;DTC型亲捏造:intro解除&#34;,&#34;NOKO解除&#34;,&#34;Timerfreeze解除&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/winghigt-Akane-R16.png" alt="winghigt-Akane-R16" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -947,7 +1076,7 @@
       
     </a>
   
-    <a class="card char-card" href="xsl/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card char-card" href="xsl/" data-tags='[&#34;参照&#34;,&#34;接近超论外下位&#34;]' data-techs='[&#34;重装人物替换自身&#34;]' style="display:flex;flex-direction:column;padding:16px;">
       
         <img src="../img/xsl.png" alt="xsl" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
       
@@ -983,6 +1112,7 @@
   flex-wrap: wrap;
   gap: 8px;
   margin: 20px 0;
+  align-items: center;
 }
 
 .tag-btn {
@@ -1046,21 +1176,36 @@
 </style>
 
 <script>
-document.querySelectorAll('.tag-btn').forEach(btn => {
+let currentTag = 'all';
+let currentTech = 'all';
+
+document.querySelectorAll('#tagFilter .tag-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const tag = btn.dataset.tag;
-    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+    currentTag = btn.dataset.tag;
+    document.querySelectorAll('#tagFilter .tag-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('#listContainer .card').forEach(card => {
-      if (tag === 'all') {
-        card.classList.remove('hidden');
-      } else {
-        const tags = JSON.parse(card.dataset.tags || '[]');
-        card.classList.toggle('hidden', !tags.includes(tag));
-      }
-    });
+    filterCards();
   });
 });
+
+document.querySelectorAll('#techFilter .tag-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentTech = btn.dataset.tech;
+    document.querySelectorAll('#techFilter .tag-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterCards();
+  });
+});
+
+function filterCards() {
+  document.querySelectorAll('#listContainer .card').forEach(card => {
+    const tags = JSON.parse(card.dataset.tags || '[]');
+    const techs = JSON.parse(card.dataset.techs || '[]');
+    const tagMatch = currentTag === 'all' || tags.includes(currentTag);
+    const techMatch = currentTech === 'all' || techs.includes(currentTech);
+    card.classList.toggle('hidden', !(tagMatch && techMatch));
+  });
+}
 </script>
   </main>
 

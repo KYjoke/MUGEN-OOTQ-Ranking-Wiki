@@ -46,7 +46,7 @@
 
 <div class="list-container" id="listContainer" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
   
-    <a class="card term-card" href="ootq/" data-tags='[]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card term-card" href="ootq/" data-tags='[]' data-techs='[]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;OOTQ&#34;,&#34;en&#34;:&#34;OOTQ&#34;,&#34;ja&#34;:&#34;OOTQ&#34;}'>OOTQ</h3>
@@ -58,7 +58,7 @@
       
     </a>
   
-    <a class="card term-card" href="parent-fabrication/" data-tags='[]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card term-card" href="parent-fabrication/" data-tags='[]' data-techs='[]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;亲捏造&#34;,&#34;en&#34;:&#34;Parent-Fabrication&#34;,&#34;ja&#34;:&#34;親捏造&#34;}'>亲捏造</h3>
@@ -70,7 +70,7 @@
       
     </a>
   
-    <a class="card term-card" href="shellcode/" data-tags='[]' style="display:flex;flex-direction:column;padding:16px;">
+    <a class="card term-card" href="shellcode/" data-tags='[]' data-techs='[]' style="display:flex;flex-direction:column;padding:16px;">
       
       <div class="card-header">
         <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Shellcode&#34;,&#34;en&#34;:&#34;Shellcode&#34;,&#34;ja&#34;:&#34;Shellcode&#34;}'>Shellcode</h3>
@@ -91,6 +91,7 @@
   flex-wrap: wrap;
   gap: 8px;
   margin: 20px 0;
+  align-items: center;
 }
 
 .tag-btn {
@@ -154,21 +155,36 @@
 </style>
 
 <script>
-document.querySelectorAll('.tag-btn').forEach(btn => {
+let currentTag = 'all';
+let currentTech = 'all';
+
+document.querySelectorAll('#tagFilter .tag-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const tag = btn.dataset.tag;
-    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+    currentTag = btn.dataset.tag;
+    document.querySelectorAll('#tagFilter .tag-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('#listContainer .card').forEach(card => {
-      if (tag === 'all') {
-        card.classList.remove('hidden');
-      } else {
-        const tags = JSON.parse(card.dataset.tags || '[]');
-        card.classList.toggle('hidden', !tags.includes(tag));
-      }
-    });
+    filterCards();
   });
 });
+
+document.querySelectorAll('#techFilter .tag-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    currentTech = btn.dataset.tech;
+    document.querySelectorAll('#techFilter .tag-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterCards();
+  });
+});
+
+function filterCards() {
+  document.querySelectorAll('#listContainer .card').forEach(card => {
+    const tags = JSON.parse(card.dataset.tags || '[]');
+    const techs = JSON.parse(card.dataset.techs || '[]');
+    const tagMatch = currentTag === 'all' || tags.includes(currentTag);
+    const techMatch = currentTech === 'all' || techs.includes(currentTech);
+    card.classList.toggle('hidden', !(tagMatch && techMatch));
+  });
+}
 </script>
   </main>
 
