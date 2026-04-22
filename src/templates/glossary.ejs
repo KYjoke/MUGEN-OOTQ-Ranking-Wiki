@@ -1,9 +1,21 @@
-<div class="glossary-page">
+<div class="content-page">
+  <nav class="breadcrumb">
+    <a href="/" data-i18n="home">首页</a>
+    <span>›</span>
+    <a href="/glossary/" data-i18n="glossary">术语</a>
+    <span>›</span>
+    <%= meta.title %>
+  </nav>
+
   <h1><%= meta.title %></h1>
+
   <% if (meta.summary) { %>
-    <p class="summary"><%= meta.summary %></p>
+    <div class="info-box">
+      <p><%= meta.summary %></p>
+    </div>
   <% } %>
+
   <div class="content-body">
-    <%- meta.description || '<p>暂无详细描述</p>' %>
+    <%- meta.description || '<p data-i18n="noContent">暂无详细描述</p>' %>
   </div>
 </div>

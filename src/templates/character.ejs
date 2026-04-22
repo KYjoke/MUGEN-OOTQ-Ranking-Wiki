@@ -1,23 +1,40 @@
-<div class="character-page">
+<div class="content-page">
+  <nav class="breadcrumb">
+    <a href="/" data-i18n="home">首页</a>
+    <span>›</span>
+    <a href="/characters/" data-i18n="characters">角色</a>
+    <span>›</span>
+    <%= meta.title %>
+  </nav>
+
   <h1><%= meta.title %></h1>
-  <% if (meta.tags) { %>
+
+  <% if (meta.tags && meta.tags.length) { %>
     <div class="tags">
       <% meta.tags.forEach(tag => { %>
         <span class="tag"><%= tag %></span>
       <% }); %>
     </div>
   <% } %>
-  <% if (meta.summary) { %>
-    <p class="summary"><%= meta.summary %></p>
-  <% } %>
-  <div class="content-body">
-    <%- meta.description || '<p>暂无详细描述</p>' %>
+
+  <div class="info-box" style="margin-top: 15px;">
+    <% if (meta.summary) { %>
+      <p><strong>Summary:</strong> <%= meta.summary %></p>
+    <% } %>
+    <% if (meta.ootqLevel) { %>
+      <p><strong>OOTQ Level:</strong> <%= meta.ootqLevel %></p>
+    <% } %>
   </div>
-  <% if (meta.links) { %>
-    <h2>相关链接</h2>
+
+  <div class="content-body">
+    <%- meta.description || '<p data-i18n="noContent">暂无详细描述</p>' %>
+  </div>
+
+  <% if (meta.links && meta.links.length) { %>
+    <h2 data-i18n="relatedLinks">相关链接</h2>
     <ul>
       <% meta.links.forEach(link => { %>
-        <li><a href="<%= link.url %>"><%= link.name %></a></li>
+        <li><a href="<%= link.url %>" target="_blank"><%= link.name %></a></li>
       <% }); %>
     </ul>
   <% } %>

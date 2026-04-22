@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,52 +8,99 @@
 </head>
 <body>
   <header>
-    <h1>MUGEN OOTQ Ranking Wiki</h1>
-    <nav>
-      <a href="/">首页</a>
-      <a href="/characters/">角色</a>
-      <a href="/glossary/">术语</a>
-    </nav>
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <span>🎮</span>
+        <span>MUGEN OOTQ Wiki</span>
+      </a>
+      <div class="header-controls">
+        <button id="themeToggle" class="btn" aria-label="Toggle theme">🌙</button>
+        <select id="langSelect" class="lang-select">
+          <option value="zh">中文</option>
+          <option value="en">English</option>
+          <option value="ja">日本語</option>
+        </select>
+      </div>
+    </div>
   </header>
-  <main>
-    <h2>角色</h2>
-<div class="card-grid">
-  
-    <a class="card" href="/characters/example-char/">
-      <h3>示例角色</h3>
-      
-        <p>这是一个示例角色卡片</p>
-      
-      
-        <div class="tags">
-          
-            <span class="tag">论外</span>
-          
-            <span class="tag">高阶</span>
-          
-        </div>
-      
-    </a>
-  
-  
+
+  <nav class="container">
+    <div style="padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+      <a href="/" data-i18n="home">首页</a>
+      <a href="/characters/" data-i18n="characters" style="margin-left: 20px;">角色</a>
+      <a href="/glossary/" data-i18n="glossary" style="margin-left: 20px;">术语</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="page-header">
+  <h1>MUGEN OOTQ Ranking Wiki</h1>
+  <div class="search-box">
+    <input type="search" id="searchInput" data-i18n-placeholder="search" placeholder="搜索...">
+  </div>
 </div>
 
-<h2>术语</h2>
-<div class="card-grid">
-  
-    <a class="card" href="/glossary/ootq/">
-      <h3>OOTQ</h3>
-      
-        <p>Out of Topic Quality，论外质量等级</p>
-      
-    </a>
-  
-  
-</div>
+<section class="section">
+  <div class="section-header">
+    <h2 data-i18n="characters">角色</h2>
+  </div>
+  <div class="card-grid" id="charactersGrid">
+    
+      <a class="card" href="/characters/example-char/">
+        <h3>示例角色</h3>
+        
+          <p>这是一个示例角色卡片</p>
+        
+        
+          <div class="tags">
+            
+              <span class="tag">论外</span>
+            
+              <span class="tag">高阶</span>
+            
+          </div>
+        
+      </a>
+    
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <h2 data-i18n="glossary">术语</h2>
+  </div>
+  <div class="card-grid" id="glossaryGrid">
+    
+      <a class="card" href="/glossary/ootq/">
+        <h3>OOTQ</h3>
+        
+          <p>Out of Topic Quality，论外质量等级</p>
+        
+      </a>
+    
+    
+  </div>
+</section>
+
+<script>
+document.getElementById('searchInput').addEventListener('input', function(e) {
+  const query = e.target.value.toLowerCase();
+  document.querySelectorAll('.card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(query) ? '' : 'none';
+  });
+});
+</script>
 
   </main>
+
   <footer>
-    <p>&copy; 2026 MUGEN OOTQ Ranking Wiki</p>
+    <div class="container">
+      <p>&copy; 2026 MUGEN OOTQ Ranking Wiki</p>
+    </div>
   </footer>
+
+  <script src="/i18n.js"></script>
 </body>
 </html>
