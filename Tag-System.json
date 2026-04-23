@@ -6,6 +6,12 @@
     "ja": "MUGEN論外参照標準タグシステム"
   },
 
+    "Top_Out": {
+      "zh": "论外最上位",
+      "en": "Out-of-Topic Top",
+      "ja": "論外最上位"
+    },
+
   "naming_rule": {
     "case": "PascalCase",
     "format": "Standard English Phrase",
@@ -59,6 +65,19 @@
       "zh": "论外上位A",
       "en": "Out-of-Topic High A",
       "ja": "論外上位A"
+    }
+  },
+
+  "character_system": {
+    "Reference": {
+      "zh": "参考",
+      "en": "Reference",
+      "ja": "参照"
+    },
+    "Yuyuko_Saigyouji": {
+      "zh": "西行寺幽幽子",
+      "en": "Yuyuko Saigyouji",
+      "ja": "西行寺幽々子"
     }
   },
 
