@@ -5,6 +5,7 @@ title: "[character] "
 labels: character
 ---
 
+<!-- zh -->
 ## 基本信息
 
 | 字段 | 值 |
@@ -28,3 +29,29 @@ labels: character
 ## 备注
 
 其他补充说明。
+<!-- zh -->
+<!-- en -->
+## Basic Info
+
+| Field | Value |
+|-------|-------|
+| **Author** | |
+| **Origin** | |
+| **Activation** | |
+| **Techniques** | |
+| **Tier** | |
+| **Tags** | |
+| **Download** | |
+
+## Character Introduction
+
+Write character description here, supporting **GitHub Flavored Markdown**.
+
+Drag and drop images directly into this Issue, then reference them in the text:
+
+![Example Image](https://...)
+
+## Notes
+
+Additional notes.
+<!-- en -->
