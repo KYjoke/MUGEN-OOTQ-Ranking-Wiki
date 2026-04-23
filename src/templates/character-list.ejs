@@ -1,74 +1,707 @@
 <div class="page-header">
-  <h1 data-i18n="characters">角色</h1>
-  <p class="lead" data-i18n="leadText">所有已收录的角色列表</p>
+  <h1>角色数据库 (Issue CMS)</h1>
+  <p class="lead">列表、预览、详情统一在此页面。数据实时来自 GitHub Issues。</p>
 </div>
 
-<%
-const tierOrder = { top: 0, high: 1, mid: 2, low: 3 };
-const levelOrder = { 'A': 0, 'B': 1, 'C': 2 };
-const sorted = [...characters].sort((a, b) => {
-  const ta = a.meta.ootqTier || 'low';
-  const tb = b.meta.ootqTier || 'low';
-  if (tierOrder[ta] !== tierOrder[tb]) return tierOrder[ta] - tierOrder[tb];
-  const la = (a.meta.ootqLevel?.zh || '').slice(-1);
-  const lb = (b.meta.ootqLevel?.zh || '').slice(-1);
-  return (levelOrder[la] || 0) - (levelOrder[lb] || 0);
-});
-
-const groups = {};
-sorted.forEach(char => {
-  const tier = char.meta.ootqTier || 'low';
-  if (!groups[tier]) groups[tier] = [];
-  groups[tier].push(char);
-});
-
-const tierNames = { top: '论外最上位', high: '论外上位', mid: '论外中位', low: '论外下位' };
-%>
-
-  <% Object.keys(groups).forEach(tier => { %>
-    <div class="tier-section">
-      <h2 class="tier-header" data-i18n="tier<%= tier.charAt(0).toUpperCase() + tier.slice(1) %>"><%= tierNames[tier] || tier %></h2>
-    <div class="card-grid">
-      <% groups[tier].forEach(char => { %>
-        <a class="card char-card" href="<%= char.slug %>/">
-          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-            <h3 class="char-title" data-lang='<%= JSON.stringify(char.meta.title).replace(/'/g, "\\'") %>'><%= getField(char.meta.title, 'zh') %></h3>
-            <% if (char.meta.ootqLevel) { %>
-              <span class="ootq-badge ootq-<%= tier %> char-ootq" data-lang='<%= JSON.stringify(char.meta.ootqLevel).replace(/'/g, "\\'") %>'><%= getField(char.meta.ootqLevel, 'zh') %></span>
-            <% } %>
-          </div>
-          <% if (char.meta.summary) { %>
-            <p class="char-summary" data-lang='<%= JSON.stringify(char.meta.summary).replace(/'/g, "\\'") %>'><%= getField(char.meta.summary, 'zh') %></p>
-          <% } %>
-          <% const tagsArr = Array.isArray(char.meta.tags) ? char.meta.tags : (char.meta.tags.zh || []); %>
-          <% if (tagsArr.length) { %>
-            <div class="tags" style="margin-top:8px;">
-              <% tagsArr.slice(0, 4).forEach(tag => { %>
-                <span class="tag"><%= getField(tag, 'zh') %></span>
-              <% }); %>
-            </div>
-          <% } %>
-        </a>
-      <% }); %>
-    </div>
+<section class="issue-cms-controls">
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="按角色名、标签、作者搜索...">
   </div>
-<% }); %>
-
-<% if (characters.length === 0) { %>
-  <div class="empty-state">
-    <p data-i18n="noContent">暂无角色</p>
+  <div class="filter-row">
+    <label for="tierFilter">分级</label>
+    <select id="tierFilter" class="lang-select">
+      <option value="all">全部</option>
+      <option value="top">论外最上位</option>
+      <option value="high">论外上位</option>
+      <option value="mid">论外中位</option>
+      <option value="low">论外下位</option>
+      <option value="unknown">未标注</option>
+    </select>
+    <button id="reloadBtn" class="btn" type="button">刷新</button>
   </div>
-<% } %>
+</section>
+
+<section id="loadingState" class="info-box">正在从 GitHub 拉取角色数据...</section>
+<section id="errorState" class="info-box" style="display:none;"></section>
+
+<section id="listView" class="section" style="display:none;">
+  <div class="section-header">
+    <h2>角色列表</h2>
+    <span id="resultCount" class="muted"></span>
+  </div>
+  <div id="cardGrid" class="card-grid"></div>
+</section>
+
+<section id="detailView" class="section" style="display:none;"></section>
+
+<script>
+(() => {
+  const CONFIG = {
+    owner: 'mugen-community',
+    repo: 'MUGEN-OOTQ-Ranking-Wiki',
+    branch: 'main',
+    characterLabel: 'character',
+    perPage: 100,
+    maxPages: 5
+  };
+
+  const state = {
+    all: [],
+    filtered: [],
+    loading: false
+  };
+
+  const refs = {
+    loading: document.getElementById('loadingState'),
+    error: document.getElementById('errorState'),
+    list: document.getElementById('listView'),
+    detail: document.getElementById('detailView'),
+    cardGrid: document.getElementById('cardGrid'),
+    resultCount: document.getElementById('resultCount'),
+    search: document.getElementById('searchInput'),
+    tier: document.getElementById('tierFilter'),
+    reload: document.getElementById('reloadBtn')
+  };
+
+  const tierOrder = { top: 0, high: 1, mid: 2, low: 3, unknown: 4 };
+
+  function escapeHtml(text) {
+    return String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function pickLocalized(value) {
+    if (typeof value === 'string') return value;
+    if (Array.isArray(value)) return value.join(' / ');
+    if (!value || typeof value !== 'object') return '';
+    const lang = localStorage.getItem('lang') || 'zh';
+    return value[lang] || value.zh || value.en || '';
+  }
+
+  function normalizeTags(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+    if (typeof value === 'object') {
+      const lang = localStorage.getItem('lang') || 'zh';
+      const candidate = value[lang] || value.zh || value.en || [];
+      if (Array.isArray(candidate)) return candidate.map((item) => String(item).trim()).filter(Boolean);
+      if (typeof candidate === 'string') return candidate.split(',').map((item) => item.trim()).filter(Boolean);
+    }
+    if (typeof value === 'string') return value.split(',').map((item) => item.trim()).filter(Boolean);
+    return [];
+  }
+
+  function normalizeList(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+    if (typeof value === 'string') return value.split(',').map((item) => item.trim()).filter(Boolean);
+    return [];
+  }
+
+  function slugify(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/-{2,}/g, '-');
+  }
+
+  function extractJsonMeta(body) {
+    const source = body || '';
+    const patterns = [
+      /```json\s*([\s\S]*?)```/i,
+      /```character\s*([\s\S]*?)```/i,
+      /<!--\s*meta\s*([\s\S]*?)-->/i
+    ];
+
+    for (const pattern of patterns) {
+      const match = source.match(pattern);
+      if (match && match[1]) {
+        try {
+          return JSON.parse(match[1].trim());
+        } catch (err) {
+          // ignore parse failure and continue
+        }
+      }
+    }
+
+    const trimmed = source.trim();
+    if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+      try {
+        return JSON.parse(trimmed);
+      } catch (err) {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  function extractFirstImage(body) {
+    const text = body || '';
+    const markdownImage = text.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/i);
+    if (markdownImage) return markdownImage[1];
+
+    const rawUrl = text.match(/(https?:\/\/[^\s]+\.(?:png|jpg|jpeg|webp|gif))/i);
+    if (rawUrl) return rawUrl[1];
+
+    return '';
+  }
+
+  function readLabel(labels, prefix) {
+    const found = (labels || []).find((label) => typeof label.name === 'string' && label.name.toLowerCase().startsWith(prefix));
+    if (!found) return '';
+    return found.name.slice(prefix.length).trim();
+  }
+
+  function inferTier(meta, labels) {
+    const fromMeta = String(meta.ootqTier || '').toLowerCase();
+    if (['top', 'high', 'mid', 'low'].includes(fromMeta)) return fromMeta;
+
+    const fromLabel = String(readLabel(labels, 'tier:')).toLowerCase();
+    if (['top', 'high', 'mid', 'low'].includes(fromLabel)) return fromLabel;
+
+    return 'unknown';
+  }
+
+  function inferLevel(meta, labels, tier) {
+    if (meta.ootqLevel) return pickLocalized(meta.ootqLevel);
+    const levelLabel = readLabel(labels, 'level:');
+    if (levelLabel) return levelLabel;
+    if (tier === 'unknown') return '未标注';
+    return tier.toUpperCase();
+  }
+
+  function normalizeImage(imagePathOrUrl, fallbackBodyImage) {
+    if (typeof imagePathOrUrl === 'string' && imagePathOrUrl.trim()) {
+      const raw = imagePathOrUrl.trim();
+      if (/^https?:\/\//i.test(raw)) return raw;
+      if (raw.startsWith('/')) {
+        return 'https://raw.githubusercontent.com/' + CONFIG.owner + '/' + CONFIG.repo + '/' + CONFIG.branch + raw;
+      }
+      return 'https://raw.githubusercontent.com/' + CONFIG.owner + '/' + CONFIG.repo + '/' + CONFIG.branch + '/docs/img/' + raw;
+    }
+    return fallbackBodyImage || '';
+  }
+
+  function bodyWithoutJsonBlock(body) {
+    return String(body || '')
+      .replace(/```json\s*[\s\S]*?```/ig, '')
+      .replace(/```character\s*[\s\S]*?```/ig, '')
+      .replace(/<!--\s*meta\s*[\s\S]*?-->/ig, '')
+      .trim();
+  }
+
+  function renderDescription(text) {
+    const raw = String(text || '').trim();
+    if (!raw) return '<p class="empty">暂无详细描述</p>';
+
+    const noScript = raw.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/ig, '');
+
+    if (typeof marked !== 'undefined' && marked.parse) {
+      try {
+        return marked.parse(noScript);
+      } catch (e) {
+        // fallback
+      }
+    }
+
+    const hasHtml = /<\/?[a-z][\s\S]*>/i.test(noScript);
+    if (hasHtml) return noScript;
+
+    return noScript
+      .split(/\n{2,}/)
+      .map((paragraph) => '<p>' + escapeHtml(paragraph).replace(/\n/g, '<br>') + '</p>')
+      .join('');
+  }
+
+  function parseCharacter(issue) {
+    const meta = extractJsonMeta(issue.body) || {};
+    const title = pickLocalized(meta.title) || issue.title || ('Issue #' + issue.number);
+    const tier = inferTier(meta, issue.labels);
+    const level = inferLevel(meta, issue.labels, tier);
+    const slugLabel = readLabel(issue.labels, 'slug:');
+    const slug = String(meta.slug || slugLabel || slugify(title) || ('issue-' + issue.number));
+    const tags = normalizeTags(meta.tags);
+    const activation = normalizeList(meta.activation);
+    const techniques = normalizeList(meta.techniques);
+    const fallbackBody = bodyWithoutJsonBlock(issue.body);
+
+    return {
+      id: issue.id,
+      number: issue.number,
+      slug,
+      title,
+      summary: pickLocalized(meta.summary) || '',
+      description: pickLocalized(meta.description) || fallbackBody,
+      tier,
+      level,
+      origin: meta.origin || '',
+      author: meta.author || '',
+      tags,
+      activation,
+      techniques,
+      downloadUrl: meta.downloadUrl || '',
+      image: normalizeImage(meta.image, extractFirstImage(issue.body)),
+      issueUrl: issue.html_url,
+      updatedAt: issue.updated_at
+    };
+  }
+
+  async function fetchCharacters() {
+    const allIssues = [];
+
+    for (let page = 1; page <= CONFIG.maxPages; page += 1) {
+      const url = new URL('https://api.github.com/repos/' + CONFIG.owner + '/' + CONFIG.repo + '/issues');
+      url.searchParams.set('state', 'all');
+      url.searchParams.set('labels', CONFIG.characterLabel);
+      url.searchParams.set('per_page', String(CONFIG.perPage));
+      url.searchParams.set('page', String(page));
+      url.searchParams.set('sort', 'updated');
+      url.searchParams.set('direction', 'desc');
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          Accept: 'application/vnd.github+json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('GitHub API 请求失败: HTTP ' + response.status);
+      }
+
+      const chunk = await response.json();
+      allIssues.push(...chunk.filter((item) => !item.pull_request));
+      if (chunk.length < CONFIG.perPage) break;
+    }
+
+    return allIssues.map(parseCharacter).sort((a, b) => {
+      if (tierOrder[a.tier] !== tierOrder[b.tier]) return tierOrder[a.tier] - tierOrder[b.tier];
+      return a.title.localeCompare(b.title, 'zh-Hans-CN');
+    });
+  }
+
+  function tierClass(tier) {
+    return ['top', 'high', 'mid', 'low'].includes(tier) ? tier : 'low';
+  }
+
+  function tierText(tier) {
+    const map = {
+      top: '论外最上位',
+      high: '论外上位',
+      mid: '论外中位',
+      low: '论外下位',
+      unknown: '未标注'
+    };
+    return map[tier] || map.unknown;
+  }
+
+  function detailUrl(slug) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('slug', slug);
+    return url.pathname + url.search;
+  }
+
+  function renderCards(items) {
+    refs.cardGrid.innerHTML = '';
+
+    if (!items.length) {
+      refs.cardGrid.innerHTML = '<div class="empty-state">没有匹配角色</div>';
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+
+    for (const item of items) {
+      const card = document.createElement('article');
+      card.className = 'card issue-card';
+      card.style.cursor = 'pointer';
+
+      card.innerHTML = [
+        item.image ? '<img class="issue-thumb" src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.title) + '">' : '',
+        '<div class="issue-head">',
+        '<h3>' + escapeHtml(item.title) + '</h3>',
+        '<span class="ootq-badge ootq-' + tierClass(item.tier) + '">' + escapeHtml(item.level) + '</span>',
+        '</div>',
+        item.summary ? '<p class="issue-summary">' + escapeHtml(item.summary) + '</p>' : '<p class="issue-summary muted">暂无摘要</p>',
+        item.tags.length ? '<div class="tags">' + item.tags.slice(0, 5).map((tag) => '<span class="tag">' + escapeHtml(tag) + '</span>').join('') + '</div>' : ''
+      ].join('');
+
+      card.addEventListener('click', () => openDetail(item.slug));
+      fragment.appendChild(card);
+    }
+
+    refs.cardGrid.appendChild(fragment);
+  }
+
+  function renderMetaRows(item) {
+    const rows = [];
+
+    function pushRow(label, value) {
+      if (!value) return;
+      rows.push('<tr><th>' + escapeHtml(label) + '</th><td>' + value + '</td></tr>');
+    }
+
+    pushRow('分级', '<span class="ootq-badge ootq-' + tierClass(item.tier) + '">' + escapeHtml(item.level) + '</span>');
+    pushRow('层级', escapeHtml(tierText(item.tier)));
+    pushRow('作者', escapeHtml(item.author));
+    pushRow('来源', escapeHtml(item.origin));
+    pushRow('启动方式', escapeHtml(item.activation.join(' / ')));
+    pushRow('技术', escapeHtml(item.techniques.join(' / ')));
+    pushRow('标签', item.tags.length ? '<div class="tags">' + item.tags.map((tag) => '<span class="tag">' + escapeHtml(tag) + '</span>').join('') + '</div>' : '');
+    pushRow('下载', item.downloadUrl ? '<a href="' + escapeHtml(item.downloadUrl) + '" target="_blank" rel="noopener">下载链接</a>' : '');
+    pushRow('Issue', '<a href="' + escapeHtml(item.issueUrl) + '" target="_blank" rel="noopener">#' + item.number + '</a>');
+
+    return rows.join('');
+  }
+
+  async function fetchComments(issueNumber) {
+    const url = 'https://api.github.com/repos/' + CONFIG.owner + '/' + CONFIG.repo + '/issues/' + issueNumber + '/comments?per_page=100';
+    const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
+    if (!response.ok) return [];
+    return response.json();
+  }
+
+  function renderComment(comment) {
+    const body = renderDescription(comment.body);
+    const date = new Date(comment.created_at).toLocaleString('zh-CN');
+    return [
+      '<div class="comment-item">',
+      '<div class="comment-header">',
+      '<img class="comment-avatar" src="' + escapeHtml(comment.user.avatar_url) + '" alt="' + escapeHtml(comment.user.login) + '">',
+      '<a class="comment-author" href="' + escapeHtml(comment.user.html_url) + '" target="_blank" rel="noopener">' + escapeHtml(comment.user.login) + '</a>',
+      '<span class="comment-date">' + escapeHtml(date) + '</span>',
+      '</div>',
+      '<div class="comment-body markdown-body">' + body + '</div>',
+      '</div>'
+    ].join('');
+  }
+
+  function renderDetail(item) {
+    refs.detail.innerHTML = [
+      '<div class="detail-header">',
+      '<button class="btn" id="backToList" type="button">返回列表</button>',
+      '<a class="btn" href="' + escapeHtml(item.issueUrl) + '" target="_blank" rel="noopener">打开 Issue</a>',
+      '</div>',
+      '<div class="character-page">',
+      '<aside class="infobox">',
+      '<div class="infobox-header"><h1>' + escapeHtml(item.title) + '</h1></div>',
+      item.image ? '<div class="infobox-image"><img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.title) + '"></div>' : '',
+      '<table class="infobox-table">' + renderMetaRows(item) + '</table>',
+      '</aside>',
+      '<article class="article-body markdown-body">',
+      item.summary ? '<p class="lead">' + escapeHtml(item.summary) + '</p>' : '',
+      '<div>' + renderDescription(item.description) + '</div>',
+      '</article>',
+      '</div>',
+      '<section class="comments-section">',
+      '<h2>评论</h2>',
+      '<div id="commentsLoading" class="info-box">正在加载评论...</div>',
+      '<div id="commentsList"></div>',
+      '</section>'
+    ].join('');
+
+    const backBtn = document.getElementById('backToList');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('slug');
+        history.pushState({}, '', url.pathname + url.search);
+        renderByRoute();
+      });
+    }
+
+    fetchComments(item.number).then((comments) => {
+      const loading = document.getElementById('commentsLoading');
+      const list = document.getElementById('commentsList');
+      if (loading) loading.style.display = 'none';
+      if (!comments.length) {
+        list.innerHTML = '<p class="muted">暂无评论，<a href="' + escapeHtml(item.issueUrl) + '" target="_blank" rel="noopener">前往 GitHub 评论</a></p>';
+        return;
+      }
+      list.innerHTML = comments.map(renderComment).join('');
+    }).catch(() => {
+      const loading = document.getElementById('commentsLoading');
+      const list = document.getElementById('commentsList');
+      if (loading) loading.style.display = 'none';
+      list.innerHTML = '<p class="muted">评论加载失败</p>';
+    });
+  }
+
+  function openDetail(slug) {
+    history.pushState({}, '', detailUrl(slug));
+    renderByRoute();
+  }
+
+  function applyFilters() {
+    const keyword = refs.search.value.trim().toLowerCase();
+    const tier = refs.tier.value;
+
+    state.filtered = state.all.filter((item) => {
+      const searchBlob = [
+        item.slug,
+        item.title,
+        item.summary,
+        item.author,
+        item.origin,
+        item.tags.join(' '),
+        item.techniques.join(' '),
+        item.activation.join(' ')
+      ].join(' ').toLowerCase();
+
+      const tierOk = tier === 'all' ? true : item.tier === tier;
+      const keywordOk = keyword ? searchBlob.includes(keyword) : true;
+      return tierOk && keywordOk;
+    });
+
+    refs.resultCount.textContent = '共 ' + state.filtered.length + ' 条';
+    renderCards(state.filtered);
+  }
+
+  function renderByRoute() {
+    const slug = new URLSearchParams(window.location.search).get('slug');
+
+    if (slug) {
+      const match = state.all.find((item) => item.slug === slug);
+      if (match) {
+        refs.list.style.display = 'none';
+        refs.detail.style.display = 'block';
+        renderDetail(match);
+        return;
+      }
+    }
+
+    refs.detail.style.display = 'none';
+    refs.list.style.display = 'block';
+    applyFilters();
+  }
+
+  function showError(message) {
+    refs.loading.style.display = 'none';
+    refs.list.style.display = 'none';
+    refs.detail.style.display = 'none';
+    refs.error.style.display = 'block';
+    refs.error.textContent = message;
+  }
+
+  async function bootstrap() {
+    if (state.loading) return;
+    state.loading = true;
+
+    refs.loading.style.display = 'block';
+    refs.error.style.display = 'none';
+
+    try {
+      state.all = await fetchCharacters();
+      refs.loading.style.display = 'none';
+      renderByRoute();
+    } catch (error) {
+      showError(error && error.message ? error.message : '加载失败，请稍后重试。');
+    } finally {
+      state.loading = false;
+    }
+  }
+
+  refs.search.addEventListener('input', applyFilters);
+  refs.tier.addEventListener('change', applyFilters);
+  refs.reload.addEventListener('click', bootstrap);
+  window.addEventListener('popstate', renderByRoute);
+
+  bootstrap();
+})();
+</script>
 
 <style>
-.tier-section {
-  margin: 30px 0;
+.issue-cms-controls {
+  margin: 10px 0 20px;
 }
-.tier-header {
-  font-size: 1.2em;
+
+.filter-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.muted {
   color: var(--text-secondary);
+}
+
+.issue-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.issue-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: var(--bg-secondary);
+}
+
+.issue-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.issue-head h3 {
+  margin: 0;
+}
+
+.issue-summary {
+  margin: 0;
+  min-height: 3.4em;
+}
+
+.detail-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.character-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.infobox {
+  width: 280px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.infobox-header {
+  background: var(--bg-card);
+  padding: 12px 15px;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 8px;
-  margin-bottom: 15px;
+}
+
+.infobox-header h1 {
+  font-size: 1.2em;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.infobox-image {
+  padding: 10px;
+  text-align: center;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infobox-image img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 4px;
+}
+
+.infobox-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.infobox-table th,
+.infobox-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+.infobox-table th {
+  background: var(--bg-card);
+  width: 34%;
+  color: var(--text-secondary);
+}
+
+.article-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.article-body .lead {
+  font-size: 1.06em;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.comments-section {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.comments-section h2 {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.comment-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.comment-author {
+  font-weight: 600;
+  font-size: 0.92em;
+}
+
+.comment-date {
+  color: var(--text-secondary);
+  font-size: 0.82em;
+}
+
+.comment-body {
+  font-size: 0.94em;
+}
+
+@media (max-width: 780px) {
+  .character-page {
+    flex-direction: column;
+  }
+
+  .infobox {
+    width: 100%;
+  }
 }
 </style>

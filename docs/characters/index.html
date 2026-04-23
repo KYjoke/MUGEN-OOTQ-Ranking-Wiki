@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Characters</title>
   <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../github-markdown.css">
   <script src="../i18n.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 </head>
 <body>
   <header>
@@ -32,1215 +34,719 @@
         <a href="../characters/" data-i18n="characters" style="margin-left: 15px;">角色</a>
         <a href="../glossary/" data-i18n="glossary" style="margin-left: 15px;">术语</a>
       </div>
-      <a href="../edit.html" class="btn" style="padding: 6px 14px; font-size: 0.9em;" data-i18n="newEntry">新建</a>
+      <a href="../edit.html" class="btn" style="padding: 6px 14px; font-size: 0.9em;" data-i18n="newEntry"><img src="../github.svg" alt="" style="height:1em;vertical-align:middle;margin-right:4px">新建</a>
     </div>
   </nav>
 
   <main class="container">
     <div class="page-header">
-  <h1 data-i18n="characters">角色</h1>
-  <p class="lead" data-i18n="leadText">所有已收录的角色列表</p>
+  <h1>角色数据库 (Issue CMS)</h1>
+  <p class="lead">列表、预览、详情统一在此页面。数据实时来自 GitHub Issues。</p>
 </div>
 
+<section class="issue-cms-controls">
+  <div class="search-box">
+    <input id="searchInput" type="search" placeholder="按角色名、标签、作者搜索...">
+  </div>
+  <div class="filter-row">
+    <label for="tierFilter">分级</label>
+    <select id="tierFilter" class="lang-select">
+      <option value="all">全部</option>
+      <option value="top">论外最上位</option>
+      <option value="high">论外上位</option>
+      <option value="mid">论外中位</option>
+      <option value="low">论外下位</option>
+      <option value="unknown">未标注</option>
+    </select>
+    <button id="reloadBtn" class="btn" type="button">刷新</button>
+  </div>
+</section>
 
-<div class="tag-filter" id="tagFilter">
-  <span style="margin-right:8px;font-weight:bold;">强度:</span>
-  <button class="tag-btn active" data-tag="all">全部</button>
-  
-  
-    <button class="tag-btn" data-tag="A级">A级</button>
-  
-    <button class="tag-btn" data-tag="B级">B级</button>
-  
-    <button class="tag-btn" data-tag="C级">C级</button>
-  
-    <button class="tag-btn" data-tag="参照">参照</button>
-  
-    <button class="tag-btn" data-tag="接近超论外下位">接近超论外下位</button>
-  
-    <button class="tag-btn" data-tag="接近超论外中位">接近超论外中位</button>
-  
-    <button class="tag-btn" data-tag="论外上位">论外上位</button>
-  
-    <button class="tag-btn" data-tag="论外下位">论外下位</button>
-  
-    <button class="tag-btn" data-tag="论外中位">论外中位</button>
-  
-</div>
-<div class="tag-filter" id="activationFilter">
-  <span style="margin-right:8px;font-weight:bold;">启动技术:</span>
-  <button class="tag-btn active" data-act="all">全部</button>
-  
-  
-    <button class="tag-btn" data-act="%F启动">%F启动</button>
-  
-    <button class="tag-btn" data-act="%N启动">%N启动</button>
-  
-    <button class="tag-btn" data-act="%n启动">%n启动</button>
-  
-    <button class="tag-btn" data-act="4CA">4CA</button>
-  
-    <button class="tag-btn" data-act="4CA启动">4CA启动</button>
-  
-    <button class="tag-btn" data-act="512超越启动">512超越启动</button>
-  
-    <button class="tag-btn" data-act="Alleg40劫持">Alleg40劫持</button>
-  
-    <button class="tag-btn" data-act="CMD">CMD</button>
-  
-    <button class="tag-btn" data-act="Flag溢出">Flag溢出</button>
-  
-    <button class="tag-btn" data-act="SFF溢出">SFF溢出</button>
-  
-    <button class="tag-btn" data-act="StateDef">StateDef</button>
-  
-    <button class="tag-btn" data-act="StateDef溢出">StateDef溢出</button>
-  
-    <button class="tag-btn" data-act="ZIP溢出">ZIP溢出</button>
-  
-    <button class="tag-btn" data-act="def溢出">def溢出</button>
-  
-</div>
-<div class="tag-filter" id="techFilter">
-  <span style="margin-right:8px;font-weight:bold;">攻击技术:</span>
-  <button class="tag-btn active" data-tech="all">全部</button>
-  
-  
-    <button class="tag-btn" data-tech="%F无效时报错">%F无效时报错</button>
-  
-    <button class="tag-btn" data-tech="%F阻止">%F阻止</button>
-  
-    <button class="tag-btn" data-tech="1024溢出(Textbug)阻止">1024溢出(Textbug)阻止</button>
-  
-    <button class="tag-btn" data-tech="CNS填塞">CNS填塞</button>
-  
-    <button class="tag-btn" data-tech="CNS指回">CNS指回</button>
-  
-    <button class="tag-btn" data-tech="CNS指空">CNS指空</button>
-  
-    <button class="tag-btn" data-tech="DEF保护">DEF保护</button>
-  
-    <button class="tag-btn" data-tech="DTC阻止">DTC阻止</button>
-  
-    <button class="tag-btn" data-tech="Def指向改">Def指向改</button>
-  
-    <button class="tag-btn" data-tech="LIFE弄">LIFE弄</button>
-  
-    <button class="tag-btn" data-tech="Life弄">Life弄</button>
-  
-    <button class="tag-btn" data-tech="NOKO解除">NOKO解除</button>
-  
-    <button class="tag-btn" data-tech="Noko解除">Noko解除</button>
-  
-    <button class="tag-btn" data-tech="Player保护">Player保护</button>
-  
-    <button class="tag-btn" data-tech="Player消去">Player消去</button>
-  
-    <button class="tag-btn" data-tech="RoundState弄">RoundState弄</button>
-  
-    <button class="tag-btn" data-tech="RoundTimer弄">RoundTimer弄</button>
-  
-    <button class="tag-btn" data-tech="RoundTimer改">RoundTimer改</button>
-  
-    <button class="tag-btn" data-tech="ST文件无效化">ST文件无效化</button>
-  
-    <button class="tag-btn" data-tech="StateDef溢出修复">StateDef溢出修复</button>
-  
-    <button class="tag-btn" data-tech="Timerfreeze解除">Timerfreeze解除</button>
-  
-    <button class="tag-btn" data-tech="intro解除">intro解除</button>
-  
-    <button class="tag-btn" data-tech="noko解除">noko解除</button>
-  
-    <button class="tag-btn" data-tech="全局变量Hook">全局变量Hook</button>
-  
-    <button class="tag-btn" data-tech="全领域Player消去">全领域Player消去</button>
-  
-    <button class="tag-btn" data-tech="全领域属性攻击">全领域属性攻击</button>
-  
-    <button class="tag-btn" data-tech="全领域防御">全领域防御</button>
-  
-    <button class="tag-btn" data-tech="冻结直死">冻结直死</button>
-  
-    <button class="tag-btn" data-tech="冻结解除">冻结解除</button>
-  
-    <button class="tag-btn" data-tech="地址转移">地址转移</button>
-  
-    <button class="tag-btn" data-tech="多线程锁值">多线程锁值</button>
-  
-    <button class="tag-btn" data-tech="大量地址改源">大量地址改源</button>
-  
-    <button class="tag-btn" data-tech="强制Damage">强制Damage</button>
-  
-    <button class="tag-btn" data-tech="强制Palno弄">强制Palno弄</button>
-  
-    <button class="tag-btn" data-tech="强制变数弄">强制变数弄</button>
-  
-    <button class="tag-btn" data-tech="强制投">强制投</button>
-  
-    <button class="tag-btn" data-tech="强制时停">强制时停</button>
-  
-    <button class="tag-btn" data-tech="强制永续">强制永续</button>
-  
-    <button class="tag-btn" data-tech="强制胜利">强制胜利</button>
-  
-    <button class="tag-btn" data-tech="强制落下">强制落下</button>
-  
-    <button class="tag-btn" data-tech="无敌解除">无敌解除</button>
-  
-    <button class="tag-btn" data-tech="替换主程序文件">替换主程序文件</button>
-  
-    <button class="tag-btn" data-tech="未知">未知</button>
-  
-    <button class="tag-btn" data-tech="游戏内联Call调用">游戏内联Call调用</button>
-  
-    <button class="tag-btn" data-tech="溢出无效时140循环卡死">溢出无效时140循环卡死</button>
-  
-    <button class="tag-btn" data-tech="溢出无效时DEF指向错误报错">溢出无效时DEF指向错误报错</button>
-  
-    <button class="tag-btn" data-tech="直死">直死</button>
-  
-    <button class="tag-btn" data-tech="线程杀手">线程杀手</button>
-  
-    <button class="tag-btn" data-tech="苏生">苏生</button>
-  
-    <button class="tag-btn" data-tech="重装人物替换自身">重装人物替换自身</button>
-  
-    <button class="tag-btn" data-tech="随阶段增长复合攻击">随阶段增长复合攻击</button>
-  
-</div>
+<section id="loadingState" class="info-box">正在从 GitHub 拉取角色数据...</section>
+<section id="errorState" class="info-box" style="display:none;"></section>
 
+<section id="listView" class="section" style="display:none;">
+  <div class="section-header">
+    <h2>角色列表</h2>
+    <span id="resultCount" class="muted"></span>
+  </div>
+  <div id="cardGrid" class="card-grid"></div>
+</section>
 
-<div class="list-container" id="listContainer" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
-  
-    <a class="card char-card" href="Chizomeno/" data-tags='["参照","论外下位","C级"]' data-acts='["%n启动"]' data-techs='["LIFE弄","noko解除"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Chizomeno.png" alt="Chizomeno" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Chizomeno&#34;,&#34;en&#34;:&#34;Chizomeno&#34;,&#34;ja&#34;:&#34;Chizomeno&#34;}'>Chizomeno</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位C&#34;,&#34;en&#34;:&#34;Out-of-Topic LowC&#34;,&#34;ja&#34;:&#34;論外下位C&#34;}'>论外下位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowC Reference Character&#34;,&#34;ja&#34;:&#34;論外下位C参照キャラクター&#34;}'>论外下位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Crazy-Catastrophe/" data-tags='["参照","论外中位","C级"]' data-acts='["4CA启动"]' data-techs='["直死","强制Palno弄","强制Damage","强制落下","强制投","强制胜利"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Crazy-Catastrophe.png" alt="Crazy-Catastrophe" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Crazy-Catastrophe&#34;,&#34;en&#34;:&#34;Crazy-Catastrophe&#34;,&#34;ja&#34;:&#34;Crazy-Catastrophe&#34;}'>Crazy-Catastrophe</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位C&#34;,&#34;en&#34;:&#34;Out-of-Topic MidC&#34;,&#34;ja&#34;:&#34;論外中位C&#34;}'>论外中位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidC Reference Character&#34;,&#34;ja&#34;:&#34;論外中位C参照キャラクター&#34;}'>论外中位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="EX_Akabane/" data-tags='["参照","论外中位","A级"]' data-acts='["4CA","%F启动"]' data-techs='["直死","NOKO解除","Player消去","CNS指回","Player保护","%F无效时报错"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/EX_Akabane.png" alt="EX_Akabane" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;EX_Akabane&#34;,&#34;en&#34;:&#34;EX_Akabane&#34;,&#34;ja&#34;:&#34;EX_Akabane&#34;}'>EX_Akabane</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位A&#34;,&#34;en&#34;:&#34;Out-of-Topic MidA&#34;,&#34;ja&#34;:&#34;論外中位A&#34;}'>论外中位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidA Reference Character&#34;,&#34;ja&#34;:&#34;論外中位A参照キャラクター&#34;}'>论外中位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Guanyin-Ancient/" data-tags='["参照","论外上位","C级"]' data-acts='["StateDef溢出"]' data-techs='["CNS指空","全局变量Hook"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Guanyin-Ancient.png" alt="Guanyin-Ancient" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Guanyin-Ancient&#34;,&#34;en&#34;:&#34;Guanyin-Ancient&#34;,&#34;ja&#34;:&#34;Guanyin-Ancient&#34;}'>Guanyin-Ancient</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位C&#34;,&#34;en&#34;:&#34;Out-of-Topic HighC&#34;,&#34;ja&#34;:&#34;論外上位C&#34;}'>论外上位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighC Reference Character&#34;,&#34;ja&#34;:&#34;論外上位C参照キャラクター&#34;}'>论外上位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Hawk-eye-Youmu/" data-tags='["参照","论外下位","C级"]' data-acts='["4CA启动"]' data-techs='["强制永续","强制Damage"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Hawk eye Youmu.png" alt="Hawk eye Youmu" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Hawk eye Youmu&#34;,&#34;en&#34;:&#34;Hawk eye Youmu&#34;,&#34;ja&#34;:&#34;Hawk eye Youmu&#34;}'>Hawk eye Youmu</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位C&#34;,&#34;en&#34;:&#34;Out-of-Topic LowC&#34;,&#34;ja&#34;:&#34;論外下位C&#34;}'>论外下位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowC Reference Character&#34;,&#34;ja&#34;:&#34;論外下位C参照キャラクター&#34;}'>论外下位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Ice-Oro-Mizuchi/" data-tags='["参照","论外上位","C级"]' data-acts='["StateDef溢出"]' data-techs='["StateDef溢出修复","Player消去","强制胜利"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Ice-Oro-Mizuchi.png" alt="Ice-Oro-Mizuchi" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Ice-Oro-Mizuchi&#34;,&#34;en&#34;:&#34;Ice-Oro-Mizuchi&#34;,&#34;ja&#34;:&#34;Ice-Oro-Mizuchi&#34;}'>Ice-Oro-Mizuchi</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位C&#34;,&#34;en&#34;:&#34;Out-of-Topic HighC&#34;,&#34;ja&#34;:&#34;論外上位C&#34;}'>论外上位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighC Reference Character&#34;,&#34;ja&#34;:&#34;論外上位C参照キャラクター&#34;}'>论外上位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Infinite-Soulabyss/" data-tags='["参照","论外上位","A级"]' data-acts='["StateDef","CMD","Flag溢出"]' data-techs='["随阶段增长复合攻击","全领域防御","DEF保护","CNS指回","Player保护","溢出无效时140循环卡死"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Infinite Soulabyss.png" alt="Infinite Soulabyss" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Infinite Soulabyss&#34;,&#34;en&#34;:&#34;Infinite Soulabyss&#34;,&#34;ja&#34;:&#34;Infinite Soulabyss&#34;}'>Infinite Soulabyss</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位A&#34;,&#34;en&#34;:&#34;Out-of-Topic HighA&#34;,&#34;ja&#34;:&#34;論外上位A&#34;}'>论外上位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighA Reference Character&#34;,&#34;ja&#34;:&#34;論外上位A参照キャラクター&#34;}'>论外上位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Infinity-Zero/" data-tags='["参照","论外下位","A级"]' data-acts='["%N启动"]' data-techs='["随阶段增长复合攻击"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Infinity-Zero.png" alt="Infinity-Zero" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Infinity-Zero&#34;,&#34;en&#34;:&#34;Infinity-Zero&#34;,&#34;ja&#34;:&#34;Infinity-Zero&#34;}'>Infinity-Zero</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位A&#34;,&#34;en&#34;:&#34;Out-of-Topic LowA&#34;,&#34;ja&#34;:&#34;論外下位A&#34;}'>论外下位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowA Reference Character&#34;,&#34;ja&#34;:&#34;論外下位A参照キャラクター&#34;}'>论外下位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Iod/" data-tags='["参照","论外下位","A级"]' data-acts='["4CA启动"]' data-techs='["冻结直死","Life弄","冻结解除","苏生","RoundTimer弄","RoundState弄"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Iod.png" alt="Iod" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Iod&#34;,&#34;en&#34;:&#34;Iod&#34;,&#34;ja&#34;:&#34;Iod&#34;}'>Iod</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位A&#34;,&#34;en&#34;:&#34;Out-of-Topic LowA&#34;,&#34;ja&#34;:&#34;論外下位A&#34;}'>论外下位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowA Reference Character&#34;,&#34;ja&#34;:&#34;論外下位A参照キャラクター&#34;}'>论外下位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Killer/" data-tags='["参照","论外上位","B级"]' data-acts='["StateDef溢出"]' data-techs='["StateDef溢出修复","CNS指空","直死"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/-Killer-.png" alt="-Killer-" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;-Killer-&#34;,&#34;en&#34;:&#34;-Killer-&#34;,&#34;ja&#34;:&#34;-Killer-&#34;}'>-Killer-</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位B&#34;,&#34;en&#34;:&#34;Out-of-Topic HighB&#34;,&#34;ja&#34;:&#34;論外上位B&#34;}'>论外上位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighB Reference Character&#34;,&#34;ja&#34;:&#34;論外上位B参照キャラクター&#34;}'>论外上位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Legend-Accelerator/" data-tags='["参照","论外下位","B级"]' data-acts='["512超越启动"]' data-techs='["冻结解除","直死"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Legend Accelerator.png" alt="Legend Accelerator" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Legend Accelerator&#34;,&#34;en&#34;:&#34;Legend Accelerator&#34;,&#34;ja&#34;:&#34;Legend Accelerator&#34;}'>Legend Accelerator</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位B&#34;,&#34;en&#34;:&#34;Out-of-Topic LowB&#34;,&#34;ja&#34;:&#34;論外下位B&#34;}'>论外下位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowB Reference Character&#34;,&#34;ja&#34;:&#34;論外下位B参照キャラクター&#34;}'>论外下位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="LindWurm/" data-tags='["参照","接近超论外下位"]' data-acts='["ZIP溢出"]' data-techs='["Def指向改"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/LindWurm.png" alt="LindWurm" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;LindWurm&#34;,&#34;en&#34;:&#34;LindWurm&#34;,&#34;ja&#34;:&#34;LindWurm&#34;}'>LindWurm</h3>
-        
-          <span class="ootq-badge ootq-approaching-low" data-lang='{&#34;zh&#34;:&#34;接近超论外下位&#34;,&#34;en&#34;:&#34;Near Super-Low&#34;,&#34;ja&#34;:&#34;接近超論外下位&#34;}'>接近超论外下位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外下位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Low Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外下位参照キャラクター&#34;}'>接近超论外下位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外下位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="M-Reimu/" data-tags='["参照","论外中位","A级"]' data-acts='["StateDef溢出","4CA启动"]' data-techs='["直死","NOKO解除","全领域属性攻击","全领域Player消去","CNS指回"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;M-Reimu ver3.11&#34;,&#34;en&#34;:&#34;M-Reimu ver3.11&#34;,&#34;ja&#34;:&#34;M-Reimu ver3.11&#34;}'>M-Reimu ver3.11</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位A&#34;,&#34;en&#34;:&#34;Out-of-Topic MidA&#34;,&#34;ja&#34;:&#34;論外中位A&#34;}'>论外中位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidA Reference Character&#34;,&#34;ja&#34;:&#34;論外中位A参照キャラクター&#34;}'>论外中位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Oni-Miko-Z/" data-tags='["参照","论外下位","B级"]' data-acts='["512超越启动"]' data-techs='["直死"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Oni-Miko-Z.png" alt="Oni-Miko-Z" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Oni-Miko-Z&#34;,&#34;en&#34;:&#34;Oni-Miko-Z&#34;,&#34;ja&#34;:&#34;Oni-Miko-Z&#34;}'>Oni-Miko-Z</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位B&#34;,&#34;en&#34;:&#34;Out-of-Topic LowB&#34;,&#34;ja&#34;:&#34;論外下位B&#34;}'>论外下位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowB Reference Character&#34;,&#34;ja&#34;:&#34;論外下位B参照キャラクター&#34;}'>论外下位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Rlyeh-Text-Special/" data-tags='["参照","论外上位","B级"]' data-acts='["StateDef溢出"]' data-techs='["StateDef溢出修复","%F阻止","1024溢出(Textbug)阻止"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/R&#39;lyeh Text-Special.png" alt="R&#39;lyeh Text-Special" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;R\&#39;lyeh Text-Special&#34;,&#34;en&#34;:&#34;R\&#39;lyeh Text-Special&#34;,&#34;ja&#34;:&#34;R\&#39;lyeh Text-Special&#34;}'>R&#39;lyeh Text-Special</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位B&#34;,&#34;en&#34;:&#34;Out-of-Topic HighB&#34;,&#34;ja&#34;:&#34;論外上位B&#34;}'>论外上位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighB Reference Character&#34;,&#34;ja&#34;:&#34;論外上位B参照キャラクター&#34;}'>论外上位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="S-Sakuya/" data-tags='["参照","论外中位","C级"]' data-acts='["4CA启动"]' data-techs='["直死","Noko解除","无敌解除","强制Damage","强制落下","强制变数弄"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/S-Sakuya.png" alt="S-Sakuya" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;S-Sakuya&#34;,&#34;en&#34;:&#34;S-Sakuya&#34;,&#34;ja&#34;:&#34;S-Sakuya&#34;}'>S-Sakuya</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位C&#34;,&#34;en&#34;:&#34;Out-of-Topic MidC&#34;,&#34;ja&#34;:&#34;論外中位C&#34;}'>论外中位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidC Reference Character&#34;,&#34;ja&#34;:&#34;論外中位C参照キャラクター&#34;}'>论外中位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Sade-Margarita/" data-tags='["参照","接近超论外下位"]' data-acts='["def溢出"]' data-techs='["未知"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Sade Margarita&#34;,&#34;en&#34;:&#34;Sade Margarita&#34;,&#34;ja&#34;:&#34;Sade Margarita&#34;}'>Sade Margarita</h3>
-        
-          <span class="ootq-badge ootq-approaching-low" data-lang='{&#34;zh&#34;:&#34;接近超论外下位&#34;,&#34;en&#34;:&#34;Near Super-Low&#34;,&#34;ja&#34;:&#34;接近超論外下位&#34;}'>接近超论外下位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外下位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Low Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外下位参照キャラクター&#34;}'>接近超论外下位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外下位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="SuperPony/" data-tags='["参照","接近超论外中位"]' data-acts='["Alleg40劫持"]' data-techs='["替换主程序文件"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/SuperPony.png" alt="SuperPony" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;SuperPony&#34;,&#34;en&#34;:&#34;SuperPony&#34;,&#34;ja&#34;:&#34;SuperPony&#34;}'>SuperPony</h3>
-        
-          <span class="ootq-badge ootq-approaching-mid" data-lang='{&#34;zh&#34;:&#34;接近超论外中位&#34;,&#34;en&#34;:&#34;Near Super-Mid&#34;,&#34;ja&#34;:&#34;接近超論外中位&#34;}'>接近超论外中位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外中位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Mid Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外中位参照キャラクター&#34;}'>接近超论外中位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外中位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Ult-Igniz/" data-tags='["参照","论外上位","A级"]' data-acts='["StateDef","Flag溢出"]' data-techs='["Def指向改","线程杀手"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Ult-Igniz.png" alt="Ult-Igniz" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Ult-Igniz&#34;,&#34;en&#34;:&#34;Ult-Igniz&#34;,&#34;ja&#34;:&#34;Ult-Igniz&#34;}'>Ult-Igniz</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位A&#34;,&#34;en&#34;:&#34;Out-of-Topic HighA&#34;,&#34;ja&#34;:&#34;論外上位A&#34;}'>论外上位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighA Reference Character&#34;,&#34;ja&#34;:&#34;論外上位A参照キャラクター&#34;}'>论外上位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Undefined-Universe/" data-tags='["参照","接近超论外中位"]' data-acts='["Alleg40劫持"]' data-techs='["未知"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Undefined Universe (4.3b)&#34;,&#34;en&#34;:&#34;Undefined Universe (4.3b)&#34;,&#34;ja&#34;:&#34;Undefined Universe (4.3b)&#34;}'>Undefined Universe (4.3b)</h3>
-        
-          <span class="ootq-badge ootq-approaching-mid" data-lang='{&#34;zh&#34;:&#34;接近超论外中位&#34;,&#34;en&#34;:&#34;Near Super-Mid&#34;,&#34;ja&#34;:&#34;接近超論外中位&#34;}'>接近超论外中位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外中位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Mid Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外中位参照キャラクター&#34;}'>接近超论外中位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外中位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Vinzelles-SPBOF/" data-tags='["参照","接近超论外下位"]' data-acts='["SFF溢出"]' data-techs='["ST文件无效化"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Vinzelles-SPBOF.png" alt="Vinzelles-SPBOF" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Vinzelles-SPBOF&#34;,&#34;en&#34;:&#34;Vinzelles-SPBOF&#34;,&#34;ja&#34;:&#34;Vinzelles-SPBOF&#34;}'>Vinzelles-SPBOF</h3>
-        
-          <span class="ootq-badge ootq-approaching-low" data-lang='{&#34;zh&#34;:&#34;接近超论外下位&#34;,&#34;en&#34;:&#34;Near Super-Low&#34;,&#34;ja&#34;:&#34;接近超論外下位&#34;}'>接近超论外下位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外下位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Low Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外下位参照キャラクター&#34;}'>接近超论外下位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外下位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Volcrz-R/" data-tags='["参照","论外中位","C级"]' data-acts='["%n启动"]' data-techs='["冻结解除","直死","强制投","强制时停","强制胜利"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Volcrz-R.png" alt="Volcrz-R" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Volcrz-R&#34;,&#34;en&#34;:&#34;Volcrz-R&#34;,&#34;ja&#34;:&#34;Volcrz-R&#34;}'>Volcrz-R</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位C&#34;,&#34;en&#34;:&#34;Out-of-Topic MidC&#34;,&#34;ja&#34;:&#34;論外中位C&#34;}'>论外中位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidC Reference Character&#34;,&#34;ja&#34;:&#34;論外中位C参照キャラクター&#34;}'>论外中位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="WickedYagami/" data-tags='["参照","论外上位","A级"]' data-acts='["StateDef溢出"]' data-techs='["StateDef溢出修复","DEF保护","CNS指回","Player保护","CNS填塞","DTC阻止","溢出无效时DEF指向错误报错"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/WickedYagami.png" alt="WickedYagami" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;WickedYagami&#34;,&#34;en&#34;:&#34;WickedYagami&#34;,&#34;ja&#34;:&#34;WickedYagami&#34;}'>WickedYagami</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位A&#34;,&#34;en&#34;:&#34;Out-of-Topic HighA&#34;,&#34;ja&#34;:&#34;論外上位A&#34;}'>论外上位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighA Reference Character&#34;,&#34;ja&#34;:&#34;論外上位A参照キャラクター&#34;}'>论外上位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Wicked_Laws_Witch/" data-tags='["参照","论外中位","B级"]' data-acts='["4CA启动"]' data-techs='["全领域属性攻击","全领域Player消去","CNS指回"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Wicked_Law&#39;s_Witch.png" alt="Wicked_Law&#39;s_Witch" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Wicked_Law\&#39;s_Witch&#34;,&#34;en&#34;:&#34;Wicked_Law\&#39;s_Witch&#34;,&#34;ja&#34;:&#34;Wicked_Law\&#39;s_Witch&#34;}'>Wicked_Law&#39;s_Witch</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位B&#34;,&#34;en&#34;:&#34;Out-of-Topic MidB&#34;,&#34;ja&#34;:&#34;論外中位B&#34;}'>论外中位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidB Reference Character&#34;,&#34;ja&#34;:&#34;論外中位B参照キャラクター&#34;}'>论外中位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="Wind-Thunder-Sword-Youmu/" data-tags='["参照","论外下位","B级"]' data-acts='["4CA启动"]' data-techs='["强制永续","直死","LIFE弄"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/Wind Thunder Sword Youmu.png" alt="Wind Thunder Sword Youmu" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;Wind Thunder Sword Youmu&#34;,&#34;en&#34;:&#34;Wind Thunder Sword Youmu&#34;,&#34;ja&#34;:&#34;Wind Thunder Sword Youmu&#34;}'>Wind Thunder Sword Youmu</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位B&#34;,&#34;en&#34;:&#34;Out-of-Topic LowB&#34;,&#34;ja&#34;:&#34;論外下位B&#34;}'>论外下位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowB Reference Character&#34;,&#34;ja&#34;:&#34;論外下位B参照キャラクター&#34;}'>论外下位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="_reimu111/" data-tags='["参照","接近超论外下位"]' data-acts='["ZIP溢出"]' data-techs='["地址转移","大量地址改源","游戏内联Call调用","多线程锁值"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/_reimu111.png" alt="_reimu111" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;_reimu111&#34;,&#34;en&#34;:&#34;_reimu111&#34;,&#34;ja&#34;:&#34;_reimu111&#34;}'>_reimu111</h3>
-        
-          <span class="ootq-badge ootq-approaching-low" data-lang='{&#34;zh&#34;:&#34;接近超论外下位&#34;,&#34;en&#34;:&#34;Near Super-Low&#34;,&#34;ja&#34;:&#34;接近超論外下位&#34;}'>接近超论外下位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外下位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Low Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外下位参照キャラクター&#34;}'>接近超论外下位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外下位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="dsrugal/" data-tags='["参照","论外上位","C级"]' data-acts='["StateDef溢出"]' data-techs='["Def指向改"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/dsrugal.png" alt="dsrugal" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;dsrugal&#34;,&#34;en&#34;:&#34;dsrugal&#34;,&#34;ja&#34;:&#34;dsrugal&#34;}'>dsrugal</h3>
-        
-          <span class="ootq-badge ootq-high" data-lang='{&#34;zh&#34;:&#34;论外上位C&#34;,&#34;en&#34;:&#34;Out-of-Topic HighC&#34;,&#34;ja&#34;:&#34;論外上位C&#34;}'>论外上位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外上位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic HighC Reference Character&#34;,&#34;ja&#34;:&#34;論外上位C参照キャラクター&#34;}'>论外上位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外上位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="duang/" data-tags='["参照","论外下位","C级"]' data-acts='["%n启动"]' data-techs='["强制胜利","RoundTimer改"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/duang.png" alt="duang" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;duang&#34;,&#34;en&#34;:&#34;duang&#34;,&#34;ja&#34;:&#34;duang&#34;}'>duang</h3>
-        
-          <span class="ootq-badge ootq-low" data-lang='{&#34;zh&#34;:&#34;论外下位C&#34;,&#34;en&#34;:&#34;Out-of-Topic LowC&#34;,&#34;ja&#34;:&#34;論外下位C&#34;}'>论外下位C</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外下位C参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic LowC Reference Character&#34;,&#34;ja&#34;:&#34;論外下位C参照キャラクター&#34;}'>论外下位C参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外下位</span>
-            
-              <span class="tag">C级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="l-reimu/" data-tags='["参照","论外中位","A级"]' data-acts='["%N启动"]' data-techs='["Player消去","强制胜利"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;l_reimu&#34;,&#34;en&#34;:&#34;l_reimu&#34;,&#34;ja&#34;:&#34;l_reimu&#34;}'>l_reimu</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位A&#34;,&#34;en&#34;:&#34;Out-of-Topic MidA&#34;,&#34;ja&#34;:&#34;論外中位A&#34;}'>论外中位A</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位A参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidA Reference Character&#34;,&#34;ja&#34;:&#34;論外中位A参照キャラクター&#34;}'>论外中位A参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">A级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="nihil/" data-tags='["参照","接近超论外下位"]' data-acts='["ZIP溢出"]' data-techs='["未知"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/nihil.png" alt="nihil" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;nihil&#34;,&#34;en&#34;:&#34;nihil&#34;,&#34;ja&#34;:&#34;nihil&#34;}'>nihil</h3>
-        
-          <span class="ootq-badge ootq-approaching-low" data-lang='{&#34;zh&#34;:&#34;接近超论外下位&#34;,&#34;en&#34;:&#34;Near Super-Low&#34;,&#34;ja&#34;:&#34;接近超論外下位&#34;}'>接近超论外下位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外下位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Low Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外下位参照キャラクター&#34;}'>接近超论外下位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外下位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="winghigt-Akane-R16/" data-tags='["参照","论外中位","B级"]' data-acts='["512超越启动"]' data-techs='["直死","CNS指空","intro解除","NOKO解除","Timerfreeze解除"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/winghigt-Akane-R16.png" alt="winghigt-Akane-R16" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;winghigt-Akane-R16&#34;,&#34;en&#34;:&#34;winghigt-Akane-R16&#34;,&#34;ja&#34;:&#34;winghigt-Akane-R16&#34;}'>winghigt-Akane-R16</h3>
-        
-          <span class="ootq-badge ootq-mid" data-lang='{&#34;zh&#34;:&#34;论外中位B&#34;,&#34;en&#34;:&#34;Out-of-Topic MidB&#34;,&#34;ja&#34;:&#34;論外中位B&#34;}'>论外中位B</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;论外中位B参照角色&#34;,&#34;en&#34;:&#34;Out-of-Topic MidB Reference Character&#34;,&#34;ja&#34;:&#34;論外中位B参照キャラクター&#34;}'>论外中位B参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">论外中位</span>
-            
-              <span class="tag">B级</span>
-            
-          </div>
-        
-      
-    </a>
-  
-    <a class="card char-card" href="xsl/" data-tags='["参照","接近超论外下位"]' data-acts='["ZIP溢出"]' data-techs='["重装人物替换自身"]' style="display:flex;flex-direction:column;padding:16px;">
-      
-        <img src="../img/xsl.png" alt="xsl" style="width:100%;height:100px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-      
-      <div class="card-header">
-        <h3 class="card-title" data-lang='{&#34;zh&#34;:&#34;xsl&#34;,&#34;en&#34;:&#34;xsl&#34;,&#34;ja&#34;:&#34;xsl&#34;}'>xsl</h3>
-        
-          <span class="ootq-badge ootq-approaching-low" data-lang='{&#34;zh&#34;:&#34;接近超论外下位&#34;,&#34;en&#34;:&#34;Near Super-Low&#34;,&#34;ja&#34;:&#34;接近超論外下位&#34;}'>接近超论外下位</span>
-        
-      </div>
-      
-        <p class="card-summary" data-lang='{&#34;zh&#34;:&#34;接近超论外下位参照角色&#34;,&#34;en&#34;:&#34;Near Super-Low Reference Character&#34;,&#34;ja&#34;:&#34;接近超論外下位参照キャラクター&#34;}'>接近超论外下位参照角色</p>
-      
-      
-        
-        
-          <div class="tags">
-            
-              <span class="tag">参照</span>
-            
-              <span class="tag">接近超论外下位</span>
-            
-          </div>
-        
-      
-    </a>
-  
-  
-</div>
+<section id="detailView" class="section" style="display:none;"></section>
+
+<script>
+(() => {
+  const CONFIG = {
+    owner: 'mugen-community',
+    repo: 'MUGEN-OOTQ-Ranking-Wiki',
+    branch: 'main',
+    characterLabel: 'character',
+    perPage: 100,
+    maxPages: 5
+  };
+
+  const state = {
+    all: [],
+    filtered: [],
+    loading: false
+  };
+
+  const refs = {
+    loading: document.getElementById('loadingState'),
+    error: document.getElementById('errorState'),
+    list: document.getElementById('listView'),
+    detail: document.getElementById('detailView'),
+    cardGrid: document.getElementById('cardGrid'),
+    resultCount: document.getElementById('resultCount'),
+    search: document.getElementById('searchInput'),
+    tier: document.getElementById('tierFilter'),
+    reload: document.getElementById('reloadBtn')
+  };
+
+  const tierOrder = { top: 0, high: 1, mid: 2, low: 3, unknown: 4 };
+
+  function escapeHtml(text) {
+    return String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function pickLocalized(value) {
+    if (typeof value === 'string') return value;
+    if (Array.isArray(value)) return value.join(' / ');
+    if (!value || typeof value !== 'object') return '';
+    const lang = localStorage.getItem('lang') || 'zh';
+    return value[lang] || value.zh || value.en || '';
+  }
+
+  function normalizeTags(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+    if (typeof value === 'object') {
+      const lang = localStorage.getItem('lang') || 'zh';
+      const candidate = value[lang] || value.zh || value.en || [];
+      if (Array.isArray(candidate)) return candidate.map((item) => String(item).trim()).filter(Boolean);
+      if (typeof candidate === 'string') return candidate.split(',').map((item) => item.trim()).filter(Boolean);
+    }
+    if (typeof value === 'string') return value.split(',').map((item) => item.trim()).filter(Boolean);
+    return [];
+  }
+
+  function normalizeList(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
+    if (typeof value === 'string') return value.split(',').map((item) => item.trim()).filter(Boolean);
+    return [];
+  }
+
+  function slugify(text) {
+    return String(text || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/-{2,}/g, '-');
+  }
+
+  function extractJsonMeta(body) {
+    const source = body || '';
+    const patterns = [
+      /```json\s*([\s\S]*?)```/i,
+      /```character\s*([\s\S]*?)```/i,
+      /<!--\s*meta\s*([\s\S]*?)-->/i
+    ];
+
+    for (const pattern of patterns) {
+      const match = source.match(pattern);
+      if (match && match[1]) {
+        try {
+          return JSON.parse(match[1].trim());
+        } catch (err) {
+          // ignore parse failure and continue
+        }
+      }
+    }
+
+    const trimmed = source.trim();
+    if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+      try {
+        return JSON.parse(trimmed);
+      } catch (err) {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  function extractFirstImage(body) {
+    const text = body || '';
+    const markdownImage = text.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/i);
+    if (markdownImage) return markdownImage[1];
+
+    const rawUrl = text.match(/(https?:\/\/[^\s]+\.(?:png|jpg|jpeg|webp|gif))/i);
+    if (rawUrl) return rawUrl[1];
+
+    return '';
+  }
+
+  function readLabel(labels, prefix) {
+    const found = (labels || []).find((label) => typeof label.name === 'string' && label.name.toLowerCase().startsWith(prefix));
+    if (!found) return '';
+    return found.name.slice(prefix.length).trim();
+  }
+
+  function inferTier(meta, labels) {
+    const fromMeta = String(meta.ootqTier || '').toLowerCase();
+    if (['top', 'high', 'mid', 'low'].includes(fromMeta)) return fromMeta;
+
+    const fromLabel = String(readLabel(labels, 'tier:')).toLowerCase();
+    if (['top', 'high', 'mid', 'low'].includes(fromLabel)) return fromLabel;
+
+    return 'unknown';
+  }
+
+  function inferLevel(meta, labels, tier) {
+    if (meta.ootqLevel) return pickLocalized(meta.ootqLevel);
+    const levelLabel = readLabel(labels, 'level:');
+    if (levelLabel) return levelLabel;
+    if (tier === 'unknown') return '未标注';
+    return tier.toUpperCase();
+  }
+
+  function normalizeImage(imagePathOrUrl, fallbackBodyImage) {
+    if (typeof imagePathOrUrl === 'string' && imagePathOrUrl.trim()) {
+      const raw = imagePathOrUrl.trim();
+      if (/^https?:\/\//i.test(raw)) return raw;
+      if (raw.startsWith('/')) {
+        return 'https://raw.githubusercontent.com/' + CONFIG.owner + '/' + CONFIG.repo + '/' + CONFIG.branch + raw;
+      }
+      return 'https://raw.githubusercontent.com/' + CONFIG.owner + '/' + CONFIG.repo + '/' + CONFIG.branch + '/docs/img/' + raw;
+    }
+    return fallbackBodyImage || '';
+  }
+
+  function bodyWithoutJsonBlock(body) {
+    return String(body || '')
+      .replace(/```json\s*[\s\S]*?```/ig, '')
+      .replace(/```character\s*[\s\S]*?```/ig, '')
+      .replace(/<!--\s*meta\s*[\s\S]*?-->/ig, '')
+      .trim();
+  }
+
+  function renderDescription(text) {
+    const raw = String(text || '').trim();
+    if (!raw) return '<p class="empty">暂无详细描述</p>';
+
+    const noScript = raw.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/ig, '');
+
+    if (typeof marked !== 'undefined' && marked.parse) {
+      try {
+        return marked.parse(noScript);
+      } catch (e) {
+        // fallback
+      }
+    }
+
+    const hasHtml = /<\/?[a-z][\s\S]*>/i.test(noScript);
+    if (hasHtml) return noScript;
+
+    return noScript
+      .split(/\n{2,}/)
+      .map((paragraph) => '<p>' + escapeHtml(paragraph).replace(/\n/g, '<br>') + '</p>')
+      .join('');
+  }
+
+  function parseCharacter(issue) {
+    const meta = extractJsonMeta(issue.body) || {};
+    const title = pickLocalized(meta.title) || issue.title || ('Issue #' + issue.number);
+    const tier = inferTier(meta, issue.labels);
+    const level = inferLevel(meta, issue.labels, tier);
+    const slugLabel = readLabel(issue.labels, 'slug:');
+    const slug = String(meta.slug || slugLabel || slugify(title) || ('issue-' + issue.number));
+    const tags = normalizeTags(meta.tags);
+    const activation = normalizeList(meta.activation);
+    const techniques = normalizeList(meta.techniques);
+    const fallbackBody = bodyWithoutJsonBlock(issue.body);
+
+    return {
+      id: issue.id,
+      number: issue.number,
+      slug,
+      title,
+      summary: pickLocalized(meta.summary) || '',
+      description: pickLocalized(meta.description) || fallbackBody,
+      tier,
+      level,
+      origin: meta.origin || '',
+      author: meta.author || '',
+      tags,
+      activation,
+      techniques,
+      downloadUrl: meta.downloadUrl || '',
+      image: normalizeImage(meta.image, extractFirstImage(issue.body)),
+      issueUrl: issue.html_url,
+      updatedAt: issue.updated_at
+    };
+  }
+
+  async function fetchCharacters() {
+    const allIssues = [];
+
+    for (let page = 1; page <= CONFIG.maxPages; page += 1) {
+      const url = new URL('https://api.github.com/repos/' + CONFIG.owner + '/' + CONFIG.repo + '/issues');
+      url.searchParams.set('state', 'all');
+      url.searchParams.set('labels', CONFIG.characterLabel);
+      url.searchParams.set('per_page', String(CONFIG.perPage));
+      url.searchParams.set('page', String(page));
+      url.searchParams.set('sort', 'updated');
+      url.searchParams.set('direction', 'desc');
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          Accept: 'application/vnd.github+json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('GitHub API 请求失败: HTTP ' + response.status);
+      }
+
+      const chunk = await response.json();
+      allIssues.push(...chunk.filter((item) => !item.pull_request));
+      if (chunk.length < CONFIG.perPage) break;
+    }
+
+    return allIssues.map(parseCharacter).sort((a, b) => {
+      if (tierOrder[a.tier] !== tierOrder[b.tier]) return tierOrder[a.tier] - tierOrder[b.tier];
+      return a.title.localeCompare(b.title, 'zh-Hans-CN');
+    });
+  }
+
+  function tierClass(tier) {
+    return ['top', 'high', 'mid', 'low'].includes(tier) ? tier : 'low';
+  }
+
+  function tierText(tier) {
+    const map = {
+      top: '论外最上位',
+      high: '论外上位',
+      mid: '论外中位',
+      low: '论外下位',
+      unknown: '未标注'
+    };
+    return map[tier] || map.unknown;
+  }
+
+  function detailUrl(slug) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('slug', slug);
+    return url.pathname + url.search;
+  }
+
+  function renderCards(items) {
+    refs.cardGrid.innerHTML = '';
+
+    if (!items.length) {
+      refs.cardGrid.innerHTML = '<div class="empty-state">没有匹配角色</div>';
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+
+    for (const item of items) {
+      const card = document.createElement('article');
+      card.className = 'card issue-card';
+      card.style.cursor = 'pointer';
+
+      card.innerHTML = [
+        item.image ? '<img class="issue-thumb" src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.title) + '">' : '',
+        '<div class="issue-head">',
+        '<h3>' + escapeHtml(item.title) + '</h3>',
+        '<span class="ootq-badge ootq-' + tierClass(item.tier) + '">' + escapeHtml(item.level) + '</span>',
+        '</div>',
+        item.summary ? '<p class="issue-summary">' + escapeHtml(item.summary) + '</p>' : '<p class="issue-summary muted">暂无摘要</p>',
+        item.tags.length ? '<div class="tags">' + item.tags.slice(0, 5).map((tag) => '<span class="tag">' + escapeHtml(tag) + '</span>').join('') + '</div>' : ''
+      ].join('');
+
+      card.addEventListener('click', () => openDetail(item.slug));
+      fragment.appendChild(card);
+    }
+
+    refs.cardGrid.appendChild(fragment);
+  }
+
+  function renderMetaRows(item) {
+    const rows = [];
+
+    function pushRow(label, value) {
+      if (!value) return;
+      rows.push('<tr><th>' + escapeHtml(label) + '</th><td>' + value + '</td></tr>');
+    }
+
+    pushRow('分级', '<span class="ootq-badge ootq-' + tierClass(item.tier) + '">' + escapeHtml(item.level) + '</span>');
+    pushRow('层级', escapeHtml(tierText(item.tier)));
+    pushRow('作者', escapeHtml(item.author));
+    pushRow('来源', escapeHtml(item.origin));
+    pushRow('启动方式', escapeHtml(item.activation.join(' / ')));
+    pushRow('技术', escapeHtml(item.techniques.join(' / ')));
+    pushRow('标签', item.tags.length ? '<div class="tags">' + item.tags.map((tag) => '<span class="tag">' + escapeHtml(tag) + '</span>').join('') + '</div>' : '');
+    pushRow('下载', item.downloadUrl ? '<a href="' + escapeHtml(item.downloadUrl) + '" target="_blank" rel="noopener">下载链接</a>' : '');
+    pushRow('Issue', '<a href="' + escapeHtml(item.issueUrl) + '" target="_blank" rel="noopener">#' + item.number + '</a>');
+
+    return rows.join('');
+  }
+
+  async function fetchComments(issueNumber) {
+    const url = 'https://api.github.com/repos/' + CONFIG.owner + '/' + CONFIG.repo + '/issues/' + issueNumber + '/comments?per_page=100';
+    const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } });
+    if (!response.ok) return [];
+    return response.json();
+  }
+
+  function renderComment(comment) {
+    const body = renderDescription(comment.body);
+    const date = new Date(comment.created_at).toLocaleString('zh-CN');
+    return [
+      '<div class="comment-item">',
+      '<div class="comment-header">',
+      '<img class="comment-avatar" src="' + escapeHtml(comment.user.avatar_url) + '" alt="' + escapeHtml(comment.user.login) + '">',
+      '<a class="comment-author" href="' + escapeHtml(comment.user.html_url) + '" target="_blank" rel="noopener">' + escapeHtml(comment.user.login) + '</a>',
+      '<span class="comment-date">' + escapeHtml(date) + '</span>',
+      '</div>',
+      '<div class="comment-body markdown-body">' + body + '</div>',
+      '</div>'
+    ].join('');
+  }
+
+  function renderDetail(item) {
+    refs.detail.innerHTML = [
+      '<div class="detail-header">',
+      '<button class="btn" id="backToList" type="button">返回列表</button>',
+      '<a class="btn" href="' + escapeHtml(item.issueUrl) + '" target="_blank" rel="noopener">打开 Issue</a>',
+      '</div>',
+      '<div class="character-page">',
+      '<aside class="infobox">',
+      '<div class="infobox-header"><h1>' + escapeHtml(item.title) + '</h1></div>',
+      item.image ? '<div class="infobox-image"><img src="' + escapeHtml(item.image) + '" alt="' + escapeHtml(item.title) + '"></div>' : '',
+      '<table class="infobox-table">' + renderMetaRows(item) + '</table>',
+      '</aside>',
+      '<article class="article-body markdown-body">',
+      item.summary ? '<p class="lead">' + escapeHtml(item.summary) + '</p>' : '',
+      '<div>' + renderDescription(item.description) + '</div>',
+      '</article>',
+      '</div>',
+      '<section class="comments-section">',
+      '<h2>评论</h2>',
+      '<div id="commentsLoading" class="info-box">正在加载评论...</div>',
+      '<div id="commentsList"></div>',
+      '</section>'
+    ].join('');
+
+    const backBtn = document.getElementById('backToList');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('slug');
+        history.pushState({}, '', url.pathname + url.search);
+        renderByRoute();
+      });
+    }
+
+    fetchComments(item.number).then((comments) => {
+      const loading = document.getElementById('commentsLoading');
+      const list = document.getElementById('commentsList');
+      if (loading) loading.style.display = 'none';
+      if (!comments.length) {
+        list.innerHTML = '<p class="muted">暂无评论，<a href="' + escapeHtml(item.issueUrl) + '" target="_blank" rel="noopener">前往 GitHub 评论</a></p>';
+        return;
+      }
+      list.innerHTML = comments.map(renderComment).join('');
+    }).catch(() => {
+      const loading = document.getElementById('commentsLoading');
+      const list = document.getElementById('commentsList');
+      if (loading) loading.style.display = 'none';
+      list.innerHTML = '<p class="muted">评论加载失败</p>';
+    });
+  }
+
+  function openDetail(slug) {
+    history.pushState({}, '', detailUrl(slug));
+    renderByRoute();
+  }
+
+  function applyFilters() {
+    const keyword = refs.search.value.trim().toLowerCase();
+    const tier = refs.tier.value;
+
+    state.filtered = state.all.filter((item) => {
+      const searchBlob = [
+        item.slug,
+        item.title,
+        item.summary,
+        item.author,
+        item.origin,
+        item.tags.join(' '),
+        item.techniques.join(' '),
+        item.activation.join(' ')
+      ].join(' ').toLowerCase();
+
+      const tierOk = tier === 'all' ? true : item.tier === tier;
+      const keywordOk = keyword ? searchBlob.includes(keyword) : true;
+      return tierOk && keywordOk;
+    });
+
+    refs.resultCount.textContent = '共 ' + state.filtered.length + ' 条';
+    renderCards(state.filtered);
+  }
+
+  function renderByRoute() {
+    const slug = new URLSearchParams(window.location.search).get('slug');
+
+    if (slug) {
+      const match = state.all.find((item) => item.slug === slug);
+      if (match) {
+        refs.list.style.display = 'none';
+        refs.detail.style.display = 'block';
+        renderDetail(match);
+        return;
+      }
+    }
+
+    refs.detail.style.display = 'none';
+    refs.list.style.display = 'block';
+    applyFilters();
+  }
+
+  function showError(message) {
+    refs.loading.style.display = 'none';
+    refs.list.style.display = 'none';
+    refs.detail.style.display = 'none';
+    refs.error.style.display = 'block';
+    refs.error.textContent = message;
+  }
+
+  async function bootstrap() {
+    if (state.loading) return;
+    state.loading = true;
+
+    refs.loading.style.display = 'block';
+    refs.error.style.display = 'none';
+
+    try {
+      state.all = await fetchCharacters();
+      refs.loading.style.display = 'none';
+      renderByRoute();
+    } catch (error) {
+      showError(error && error.message ? error.message : '加载失败，请稍后重试。');
+    } finally {
+      state.loading = false;
+    }
+  }
+
+  refs.search.addEventListener('input', applyFilters);
+  refs.tier.addEventListener('change', applyFilters);
+  refs.reload.addEventListener('click', bootstrap);
+  window.addEventListener('popstate', renderByRoute);
+
+  bootstrap();
+})();
+</script>
 
 <style>
-.tag-filter {
+.issue-cms-controls {
+  margin: 10px 0 20px;
+}
+
+.filter-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 20px 0;
+  gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.tag-btn {
-  padding: 6px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: all 0.2s;
+.muted {
+  color: var(--text-secondary);
 }
 
-.tag-btn:hover {
-  border-color: var(--link-color);
-}
-
-.tag-btn.active {
-  background: var(--link-color);
-  color: white;
-  border-color: var(--link-color);
-}
-
-.list-container .card {
+.issue-card {
   display: flex;
   flex-direction: column;
-  padding: 16px;
 }
 
-.list-container .card.hidden {
-  display: none !important;
+.issue-thumb {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: var(--bg-secondary);
 }
 
-.card-header {
+.issue-head {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.card-title {
+.issue-head h3 {
   margin: 0;
-  color: var(--link-color);
-  font-size: 1.1em;
 }
 
-.card-summary {
-  color: var(--text-secondary);
-  font-size: 0.95em;
+.issue-summary {
   margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+  min-height: 3.4em;
+}
+
+.detail-header {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.character-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.infobox {
+  width: 280px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
-.list-container .tags {
-  margin-top: 8px;
+.infobox-header {
+  background: var(--bg-card);
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infobox-header h1 {
+  font-size: 1.2em;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.infobox-image {
+  padding: 10px;
+  text-align: center;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.infobox-image img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 4px;
+}
+
+.infobox-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.infobox-table th,
+.infobox-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+.infobox-table th {
+  background: var(--bg-card);
+  width: 34%;
+  color: var(--text-secondary);
+}
+
+.article-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.article-body .lead {
+  font-size: 1.06em;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.comments-section {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.comments-section h2 {
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.comment-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.comment-author {
+  font-weight: 600;
+  font-size: 0.92em;
+}
+
+.comment-date {
+  color: var(--text-secondary);
+  font-size: 0.82em;
+}
+
+.comment-body {
+  font-size: 0.94em;
+}
+
+@media (max-width: 780px) {
+  .character-page {
+    flex-direction: column;
+  }
+
+  .infobox {
+    width: 100%;
+  }
 }
 </style>
 
-<script>
-let currentTag = 'all';
-let currentAct = 'all';
-let currentTech = 'all';
-
-document.querySelectorAll('#tagFilter .tag-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    console.log('Tag button clicked:', e.target.dataset.tag);
-    currentTag = btn.dataset.tag;
-    document.querySelectorAll('#tagFilter .tag-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    filterCards();
-  });
-});
-
-document.querySelectorAll('#activationFilter .tag-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    currentAct = btn.dataset.act;
-    document.querySelectorAll('#activationFilter .tag-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    filterCards();
-  });
-});
-
-document.querySelectorAll('#techFilter .tag-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    currentTech = btn.dataset.tech;
-    document.querySelectorAll('#techFilter .tag-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    filterCards();
-  });
-});
-
-function filterCards() {
-  const cards = document.querySelectorAll('#listContainer .card');
-  console.log('Filtering', cards.length, 'cards', 'currentTag:', currentTag, 'currentAct:', currentAct, 'currentTech:', currentTech);
-  cards.forEach(card => {
-    const tags = JSON.parse(card.dataset.tags || '[]').map(t => t.toLowerCase());
-    const acts = JSON.parse(card.dataset.acts || '[]').map(a => a.toLowerCase());
-    const techs = JSON.parse(card.dataset.techs || '[]').map(t => t.toLowerCase());
-    const tagLower = currentTag.toLowerCase();
-    const actLower = currentAct.toLowerCase();
-    const techLower = currentTech.toLowerCase();
-    const tagMatch = currentTag === 'all' || tags.includes(tagLower);
-    const actMatch = currentAct === 'all' || acts.includes(actLower);
-    const techMatch = currentTech === 'all' || techs.includes(techLower);
-    const shouldHide = !(tagMatch && actMatch && techMatch);
-    console.log('Card:', card.href, 'tags:', tags, 'tagMatch:', tagMatch, 'actMatch:', actMatch, 'techMatch:', techMatch, 'shouldHide:', shouldHide);
-    card.classList.toggle('hidden', shouldHide);
-  });
-}
-</script>
   </main>
 
   <footer>

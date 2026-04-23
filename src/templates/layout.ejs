@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
   <link rel="stylesheet" href="<%= r('styles.css') %>">
+  <link rel="stylesheet" href="<%= r('github-markdown.css') %>">
   <script src="<%= r('i18n.js') %>" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
 </head>
 <body>
   <header>
@@ -32,7 +34,7 @@
         <a href="<%= r('characters/') %>" data-i18n="characters" style="margin-left: 15px;">角色</a>
         <a href="<%= r('glossary/') %>" data-i18n="glossary" style="margin-left: 15px;">术语</a>
       </div>
-      <a href="<%= r('edit.html') %>" class="btn" style="padding: 6px 14px; font-size: 0.9em;" data-i18n="newEntry">新建</a>
+      <a href="<%= r('edit.html') %>" class="btn" style="padding: 6px 14px; font-size: 0.9em;" data-i18n="newEntry"><img src="<%= r('github.svg') %>" alt="" style="height:1em;vertical-align:middle;margin-right:4px">新建</a>
     </div>
   </nav>
 

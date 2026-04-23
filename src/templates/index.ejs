@@ -1,92 +1,21 @@
 <div class="page-header">
   <h1>MUGEN OOTQ Ranking Wiki</h1>
-  <div class="search-box">
-    <input type="search" id="searchInput" data-i18n-placeholder="search" placeholder="搜索...">
-  </div>
+  <p class="lead">角色内容已重构为 GitHub Issue CMS。列表、预览、详情统一在单页中。</p>
 </div>
 
-<%
-const tierOrder = { top: 0, high: 1, mid: 2, low: 3 };
-const levelOrder = { 'A': 0, 'B': 1, 'C': 2 };
-const sorted = [...characters].sort((a, b) => {
-  const ta = a.meta.ootqTier || 'low';
-  const tb = b.meta.ootqTier || 'low';
-  if (tierOrder[ta] !== tierOrder[tb]) return tierOrder[ta] - tierOrder[tb];
-  const la = (a.meta.ootqLevel?.zh || '').slice(-1);
-  const lb = (b.meta.ootqLevel?.zh || '').slice(-1);
-  return (levelOrder[la] || 0) - (levelOrder[lb] || 0);
-});
-
-const groups = {};
-sorted.forEach(char => {
-  const tier = char.meta.ootqTier || 'low';
-  if (!groups[tier]) groups[tier] = [];
-  groups[tier].push(char);
-});
-
-const tierNames = { top: '论外最上位', high: '论外上位', mid: '论外中位', low: '论外下位' };
-const tierNamesEn = { top: 'Top', high: 'High', mid: 'Mid', low: 'Low' };
-%>
-
 <section class="section">
-  <div class="section-header">
-    <h2 data-i18n="characters">角色</h2>
-    <a href="<%= r('characters/') %>" style="font-size:0.9em;" data-i18n="viewAll">查看全部 →</a>
-  </div>
-
-  <% Object.keys(groups).forEach(tier => { %>
-    <div class="home-tier-section">
-      <h3 class="home-tier-header" data-i18n="tier<%= tier.charAt(0).toUpperCase() + tier.slice(1) %>"><%= tierNames[tier] || tier %></h3>
-      <div class="card-grid">
-        <% groups[tier].slice(0, 3).forEach(char => { %>
-          <a class="card char-card" href="<%= r('characters/') %><%= char.slug %>/">
-            <% if (char.meta.image) { %>
-              <img src="img/<%= char.meta.image %>" alt="<%= getField(char.meta.title, 'zh') %>" style="width:100%;height:120px;object-fit:cover;border-radius:4px;margin-bottom:10px;">
-            <% } %>
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;">
-              <h3 class="char-title" data-lang='<%= JSON.stringify(char.meta.title).replace(/'/g, "\\'") %>'><%= getField(char.meta.title, 'zh') %></h3>
-              <% if (char.meta.ootqLevel) { %>
-                <span class="ootq-badge ootq-<%= tier %> char-ootq" data-lang='<%= JSON.stringify(char.meta.ootqLevel).replace(/'/g, "\\'") %>'><%= getField(char.meta.ootqLevel, 'zh') %></span>
-              <% } %>
-            </div>
-            <p class="char-summary" data-lang='<%= JSON.stringify(char.meta.summary).replace(/'/g, "\\'") %>' style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;"><%= getField(char.meta.summary, 'zh') %></p>
-          </a>
-        <% }); %>
-      </div>
-    </div>
-  <% }); %>
-</section>
-
-<section class="section">
-  <div class="section-header">
-    <h2 data-i18n="glossary">术语</h2>
-    <a href="<%= r('glossary/') %>" style="font-size:0.9em;" data-i18n="viewAll">查看全部 →</a>
-  </div>
-  <div class="card-grid" id="glossaryGrid">
-    <% terms.forEach((term, idx) => { %>
-      <a class="card glossary-card" href="<%= r('glossary/') %><%= term.slug %>/">
-        <h3 class="term-title" data-lang='<%= JSON.stringify(term.meta.title).replace(/'/g, "\\'") %>'><%= getField(term.meta.title, 'zh') %></h3>
-        <% if (term.meta.summary) { %>
-          <p class="term-summary" data-lang='<%= JSON.stringify(term.meta.summary).replace(/'/g, "\\'") %>' style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;"><%= getField(term.meta.summary, 'zh') %></p>
-        <% } %>
-      </a>
-    <% }); %>
-    <% if (terms.length === 0) { %>
-      <div class="empty-state">
-        <p data-i18n="noContent">暂无术语</p>
-      </div>
-    <% } %>
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <a class="card" href="<%= r('characters/') %>">
+      <h3>角色数据库</h3>
+      <p>进入单页角色库，按 Issue 实时读取数据，支持搜索、预览、详情。</p>
+    </a>
+    <a class="card" href="<%= r('edit.html') %>">
+      <h3>新建角色草稿</h3>
+      <p>通过表单生成 Issue JSON 草稿并跳转 GitHub 新建 Issue 页面。</p>
+    </a>
+    <a class="card" href="<%= r('glossary/') %>">
+      <h3>术语表</h3>
+      <p>当前术语条目数量：<strong><%= termsCount %></strong></p>
+    </a>
   </div>
 </section>
-
-<style>
-.home-tier-section {
-  margin: 20px 0;
-}
-.home-tier-header {
-  font-size: 1em;
-  color: var(--text-secondary);
-  margin-bottom: 10px;
-  font-weight: normal;
-}
-</style>
