@@ -126,10 +126,15 @@
       "en": "Flag Overflow Trigger",
       "ja": "Flagオーバーフロー起動"
     },
+    "Command_Overflow_Trigger": {
+      "zh": "Command溢出启动",
+      "en": "Command Overflow Trigger",
+      "ja": "コマンドオーバーフロー起動"
+    },
     "Overdrive_512_Trigger": {
       "zh": "512超越启动",
-      "en": "512 Overdrive Trigger",
-      "ja": "512オーバードライブ起動"
+      "en": "512 Overflow Trigger",
+      "ja": "512オーバーフロー起動"
     }
   },
 
@@ -159,8 +164,8 @@
   "effect_technique": {
     "Death_Manipulation": {
       "zh": "直死",
-      "en": "Death Manipulation",
-      "ja": "即死操作"
+      "en": "Direct Death",
+      "ja": "直死"
     },
     "Player_Deletion": {
       "zh": "玩家删除",
@@ -184,7 +189,7 @@
     },
     "Forced_Grab": {
       "zh": "强制投",
-      "en": "Forced Grab",
+      "en": "Forced Throw",
       "ja": "強制投げ"
     },
     "Forced_Time_Stop": {
@@ -219,13 +224,13 @@
     },
     "Round_State_Manipulation": {
       "zh": "回合状态操作",
-      "en": "Round State Manipulation",
-      "ja": "ラウンド状態操作"
+      "en": "Roundstate Manipulation",
+      "ja": "RoundState操作"
     },
     "Palette_Manipulation": {
       "zh": "调色板操作",
-      "en": "Palette Manipulation",
-      "ja": "パレット操作"
+      "en": "PalNo Manipulation",
+      "ja": "PalNo弄り"
     },
     "Intro_Removal": {
       "zh": "开场解除",
@@ -235,7 +240,7 @@
     "Timer_Freeze_Removal": {
       "zh": "计时冻结解除",
       "en": "Timer Freeze Removal",
-      "ja": "タイマーフリーズ解除"
+      "ja": "TimerFreeze解除"
     },
     "DEF_Protection": {
       "zh": "DEF保护",
