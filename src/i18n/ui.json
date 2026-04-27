@@ -1,5 +1,8 @@
 {
   "zh": {
+    "siteName": "MUGEN OOTQ Wiki",
+    "siteNameFull": "MUGEN OOTQ Ranking Wiki",
+    "footer": "© 2026 MUGEN OOTQ Ranking Wiki",
     "home": "首页",
     "characters": "角色",
     "glossary": "术语",
@@ -47,6 +50,9 @@
     "noDetailDesc": "暂无详细描述"
   },
   "en": {
+    "siteName": "MUGEN OOTQ Wiki",
+    "siteNameFull": "MUGEN OOTQ Ranking Wiki",
+    "footer": "© 2026 MUGEN OOTQ Ranking Wiki",
     "home": "Home",
     "characters": "Characters",
     "glossary": "Glossary",
@@ -94,6 +100,9 @@
     "noDetailDesc": "No description yet"
   },
   "ja": {
+    "siteName": "MUGEN OOTQ Wiki",
+    "siteNameFull": "MUGEN OOTQ Ranking Wiki",
+    "footer": "© 2026 MUGEN OOTQ Ranking Wiki",
     "home": "ホーム",
     "characters": "キャラクター",
     "glossary": "用語",

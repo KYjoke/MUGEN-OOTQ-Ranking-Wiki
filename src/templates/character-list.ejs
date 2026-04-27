@@ -249,7 +249,7 @@
 
   function tierLabel(tier, level) {
     const lang = state.lang;
-    if (level && typeof level === 'object') return level[lang] || level.zh || '';
+    if (level && typeof level === 'object') return level[lang] || level[defaultLang] || '';
     if (typeof level === 'string') return level;
     return window.__('tierUnknown', state.lang);
   }
@@ -259,7 +259,7 @@
     if (!entries) return tag.key;
     const trans = entries[tag.key];
     if (!trans) return tag.key;
-    return trans[lang] || trans.zh || tag.key;
+    return trans[lang] || trans[defaultLang] || tag.key;
   }
 
   function renderDescription(text) {
@@ -293,7 +293,7 @@
         '<h3>' + escapeHtml(item.title) + '</h3>',
         levelText ? '<span class="ootq-badge ootq-' + tierClass(item.tier) + '">' + escapeHtml(levelText) + '</span>' : '',
         '</div>',
-        (item.summaryByLang[lang] || item.summaryByLang.zh) ? '<p class="issue-summary">' + escapeHtml(item.summaryByLang[lang] || item.summaryByLang.zh) + '</p>' : '',
+        (item.summaryByLang[lang] || item.summaryByLang[defaultLang]) ? '<p class="issue-summary">' + escapeHtml(item.summaryByLang[lang] || item.summaryByLang[defaultLang]) + '</p>' : '',
         tags.length ? '<div class="tags">' + tags.slice(0, 6).map(t => '<span class="tag">' + escapeHtml(tagLabel(t, lang)) + '</span>').join('') + '</div>' : ''
       ].join('');
       card.addEventListener('click', () => openDetail(item.slug));
@@ -386,7 +386,7 @@
     const tierFilter = refs.tier.value;
 
     state.filtered = state.all.filter(item => {
-      const tags = item.tagsByLang[lang] || item.tagsByLang.zh || [];
+      const tags = item.tagsByLang[lang] || item.tagsByLang[defaultLang] || [];
       const tagTexts = tags.map(t => tagLabel(t, lang).toLowerCase()).join(' ');
       const searchBlob = [item.slug, item.title, tagTexts].join(' ').toLowerCase();
       const tierOk = tierFilter === 'all' || item.tier === tierFilter;
