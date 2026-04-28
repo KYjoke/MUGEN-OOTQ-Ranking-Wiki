@@ -83,7 +83,6 @@
   const CONFIG = {
     owner: 'mugen-community',
     repo: 'MUGEN-OOTQ-Ranking-Wiki',
-    discussionLabel: 'discussion',
     perPage: 100,
     maxPages: 5
   };
@@ -160,7 +159,6 @@
     for (let page = 1; page <= CONFIG.maxPages; page += 1) {
       const url = new URL('https://api.github.com/repos/' + CONFIG.owner + '/' + CONFIG.repo + '/issues');
       url.searchParams.set('state', 'all');
-      url.searchParams.set('labels', CONFIG.discussionLabel);
       url.searchParams.set('per_page', String(CONFIG.perPage));
       url.searchParams.set('page', String(page));
       url.searchParams.set('sort', 'updated');
@@ -181,7 +179,6 @@
     for (var i = 0; i < items.length; i++) {
       for (var j = 0; j < items[i].labels.length; j++) {
         var l = items[i].labels[j];
-        if (l === CONFIG.discussionLabel) continue;
         map[l] = (map[l] || 0) + 1;
       }
     }
@@ -249,7 +246,7 @@
       row.className = 'disc-row';
       row.style.cursor = 'pointer';
       var date = new Date(item.createdAt).toLocaleDateString('zh-CN');
-      var labelHtml = item.labels.filter(function(l) { return l !== CONFIG.discussionLabel; }).map(function(l) { return '<span class="tag">' + escapeHtml(l) + '</span>'; }).join('');
+      var labelHtml = item.labels.map(function(l) { return '<span class="tag">' + escapeHtml(l) + '</span>'; }).join('');
       row.innerHTML = [
         '<div class="disc-row-main">',
         '<h3 class="disc-row-title">' + escapeHtml(item.title) + '</h3>',
@@ -277,7 +274,7 @@
       '<article class="markdown-body">',
       '<h1 class="detail-title">' + escapeHtml(item.title) + '</h1>',
       '<div class="detail-meta">',
-      item.labels.filter(function(l) { return l !== CONFIG.discussionLabel; }).map(function(l) { return '<span class="tag">' + escapeHtml(l) + '</span>'; }).join(''),
+      item.labels.map(function(l) { return '<span class="tag">' + escapeHtml(l) + '</span>'; }).join(''),
       '</div>',
       '<hr class="detail-divider">',
       renderMarkdown(item.body),
