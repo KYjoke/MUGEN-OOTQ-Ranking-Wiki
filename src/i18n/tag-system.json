@@ -94,12 +94,12 @@
     "StateDef_Overflow_Trigger": {
       "zh": "StateDef溢出启动",
       "en": "StateDef Overflow Trigger",
-      "ja": "StateDefオーバーフロー起動"
-    },
-    "State_Overflow_Trigger": {
-      "zh": "S溢出启动",
-      "en": "State Overflow Trigger",
-      "ja": "Stateオーバーフロー起動"
+      "ja": "StateDefオーバーフロー起動",
+      "_alias": {
+        "zh": "S溢出启动",
+        "en": "State Overflow Trigger",
+        "ja": "Stateオーバーフロー起動"
+      }
     },
     "DEF_Overflow_Trigger": {
       "zh": "DEF溢出启动",

@@ -116,10 +116,19 @@
       for (const [key, translations] of Object.entries(entries)) {
         if (typeof translations !== 'object' || translations === null) continue;
         for (const [lang, text] of Object.entries(translations)) {
+          if (lang.startsWith('_')) continue;
           if (!text) continue;
           const lower = text.toLowerCase();
           if (!index[lower]) index[lower] = [];
           index[lower].push({ key, category, lang });
+        }
+        if (translations._alias) {
+          for (const [lang, text] of Object.entries(translations._alias)) {
+            if (!text) continue;
+            const lower = text.toLowerCase();
+            if (!index[lower]) index[lower] = [];
+            index[lower].push({ key, category, lang });
+          }
         }
         if (category === 'tier_system') {
           tierKeys[key] = translations;
