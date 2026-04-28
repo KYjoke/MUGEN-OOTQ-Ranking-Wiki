@@ -388,20 +388,37 @@
 </script>
 
 <style>
-.disc-row-list { display: flex; flex-direction: column; gap: 0; }
+.disc-row-list { display: flex; flex-direction: column; gap: 12px; }
 .disc-row {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 14px 16px; border-bottom: 1px solid var(--border-color);
-  gap: 16px;
+  padding: 16px 18px; gap: 16px;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  border-radius: 8px; cursor: pointer;
 }
-.disc-row:hover { background: var(--bg-card); }
+.disc-row:hover { border-color: var(--accent); }
 .disc-row-main { flex: 1; min-width: 0; }
-.disc-row-title { margin: 0 0 4px; font-size: 1em; font-weight: 600; }
+.disc-row-title { margin: 0 0 6px; font-size: 1em; font-weight: 600; }
 .disc-row-labels { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 4px; }
 .disc-row-labels .tag { font-size: 0.78em; padding: 1px 6px; }
 .disc-row-excerpt { margin: 0; font-size: 0.85em; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .disc-row-meta { flex-shrink: 0; text-align: right; font-size: 0.82em; color: var(--text-secondary); }
 .disc-row-comments::before { content: "\1F4AC "; }
+
+.issue-cms-controls .tag-filters {
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+}
+.issue-cms-controls .filter-check {
+  display: inline-flex; align-items: center; gap: 4px; cursor: pointer; font-size: 0.88em; white-space: nowrap;
+}
+.issue-cms-controls .filter-check input[type=checkbox] { margin: 0; display: none; }
+.issue-cms-controls .filter-tag {
+  display: inline-block; padding: 3px 10px; border-radius: 4px;
+  background: var(--bg-card); border: 1px solid var(--border-color);
+  font-size: 0.88em; line-height: 1.4;
+}
+.issue-cms-controls .filter-check input[type=checkbox]:checked + .filter-tag {
+  background: var(--accent); color: var(--bg); border-color: var(--accent);
+}
 </style>
 
   </main>
