@@ -460,7 +460,7 @@
       }
       var attOk = attSet.size === 0;
       if (!attOk) {
-        attOk = tags.some(function(t) { return (t.category === 'attack_technique' || t.category === 'effect_technique') && attSet.has(t.key); });
+        attOk = tags.some(function(t) { return t.category === 'attack_technique' && attSet.has(t.key); });
       }
       return tierOk && keywordOk && trigOk && attOk;
     }).sort((a, b) => {

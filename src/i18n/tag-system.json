@@ -5,7 +5,6 @@
     "en": "MUGEN Null Standard Tag System",
     "ja": "MUGEN論外参照標準タグシステム"
   },
-
   "naming_rule": {
     "case": {
       "zh": "帕斯卡命名法",
@@ -24,7 +23,6 @@
       "ja": "格付け（tier_system）、起動技術（trigger_technique）、攻撃技術（attack_technique）、効果技術（effect_technique）の4つのカテゴリのみを保存。値フィールドは多言語（zh/en/ja）をサポート"
     }
   },
-
   "tier_system": {
     "Top_Out": {
       "zh": "论外最上位",
@@ -46,7 +44,6 @@
       "en": "Null A",
       "ja": "論外下位A"
     },
-
     "Mid_Out_C": {
       "zh": "论外中位C",
       "en": "VoidNull C",
@@ -62,7 +59,6 @@
       "en": "VoidNull A",
       "ja": "論外中位A"
     },
-
     "Upper_Out_C": {
       "zh": "论外上位C",
       "en": "SuperNull C",
@@ -79,7 +75,6 @@
       "ja": "論外上位A"
     }
   },
-
   "trigger_technique": {
     "PercentN_Trigger": {
       "zh": "%N启动",
@@ -137,7 +132,6 @@
       "ja": "512オーバーフロー起動"
     }
   },
-
   "attack_technique": {
     "DTC_Parent_Attack": {
       "zh": "DTC型亲捏造",
@@ -158,10 +152,7 @@
       "zh": "多线程API",
       "en": "API Attack Multi-threaded",
       "ja": "マルチスレッドAPI攻撃"
-    }
-  },
-
-  "effect_technique": {
+    },
     "Death_Manipulation": {
       "zh": "直死",
       "en": "Direct Death",
