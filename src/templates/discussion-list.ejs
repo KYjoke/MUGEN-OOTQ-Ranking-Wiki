@@ -187,7 +187,7 @@
   function renderRows(items) {
     refs.rowList.innerHTML = '';
     if (!items.length) {
-      refs.rowList.innerHTML = '<div class="empty-state">' + window.__('noMatch', 'zh') + '</div>';
+      refs.rowList.innerHTML = '<div class="empty-state">' + (state.all && state.all.length ? '没有匹配结果' : '暂无讨论') + '</div>';
       return;
     }
     var fragment = document.createDocumentFragment();
